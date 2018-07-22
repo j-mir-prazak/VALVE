@@ -9,7 +9,7 @@ fi
 echo -ne "\n\e[94m" >> output.file
 date >> output.file
 
-if [ ! -z $1 ]
+if [ -z $1 ]
 then
 echo -e "-----------------------------" >> output.file
 echo -e "    STARTED BY LXSESSION.    " >> output.file
