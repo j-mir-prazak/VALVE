@@ -129,7 +129,7 @@ function cat(tty) {
 			else if ( string[i].length > 0 && string[i].match(/^system:encoders/) && tty["comfirmed"]) {
 
 			 	var encoders = string[i].replace(/^system:encoders:/, "")
-				console.log("number of encoders: " + encoders);
+				console.log(tty["tty"] + " number of encoders: " + encoders);
 				for ( var y = 0; y < encoders; y++ ) {
 					var player = setupPlayer(tty["position"] + "" + y)
 					if ( player != false ) players[tty["position"] + "" + y] = player
