@@ -1,27 +1,29 @@
 #!/bin/bash
 export DISPLAY=:0
 
+cd /home/pi/valve
 
-echo -ne "\n\e[94m"
-date
+if [ -f output.file ]
+then
+	echo -ne "" > output.file
+fi
+
+echo -ne "\n\e[94m" >> output.file
+date >> output.file
 
 if [ ! -z $1 ]
 then
-echo -e "-----------------------------"
-echo -e "    STARTED BY LXSESSION.    "
+echo -e "-----------------------------" >> output.file
+echo -e "    STARTED BY LXSESSION.    " >> output.file
 fi
-echo -e "-----------------------------"
-echo -e "          AUTOSTART.         "
-echo -e "-----------------------------"
-echo -e ""
+echo -e "-----------------------------" >> output.file
+echo -e "          AUTOSTART.         " >> output.file
+echo -e "-----------------------------" >> output.file
+echo -e "" >> output.file
+echo -e "" >> output.file
 
-cd /home/pi/valve
-if [ -z output.file ]
-then
-	echo "" > output.file
-fi
 
-(./bootstrap.sh > output.file) &
+(./bootstrap.sh >> output.file) &
 PROC1=$!
 (tail -f output.file) &
 PROC2=$!
