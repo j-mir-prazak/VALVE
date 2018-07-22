@@ -107,7 +107,7 @@ function cat(tty) {
 	//periodical checking until the device respondes
 	function echoReady() {
 		var ready = spawner.spawn("bash", new Array("-c", "./ttyReady.sh " + tty["tty"]))
-		console.log(tty["tty"] + "was sent 'ready?'")
+		console.log(tty["tty"] + " was sent 'ready?'")
 	}
 	echoReady()
 	var echo = setInterval(function(){
