@@ -218,7 +218,7 @@ function ls(search) {
 	  var string = `${data}`
 		string = string.replace(/(\r?\n)(\r?\n)+/, "\n")
 		string = string.replace(/\r?\n$/, "")
-		console.log(string)
+		console.log(string+"??")
 		return false
 	});
 
