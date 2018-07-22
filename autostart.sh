@@ -11,5 +11,6 @@ fi
 PROC1=$!
 (tail -f output.file) &
 PROC2=$!
-trap 'kill $PROC1 >/dev/null; kill $PROC2  >/dev/null; echo -e "\e[33m\n\n-----------------------------\n      PROCESS TERMINATED.    \n-----------------------------\n\n" | tee -a output.file; trap SIGINT' SIGINT
-wait 2>/dev/null >/dev/null
+trap '' SIGINT
+trap 'disown $PROC2; disown $PROC1; kill -9 $PROC1 2>/dev/null; kill -9 $PROC2 2>/dev/null; echo -e "\e[33m\n\n-----------------------------\n      PROCESS TERMINATED.    \n-----------------------------\n\n" | tee -a output.file; trap SIGINT' SIGINT
+wait
