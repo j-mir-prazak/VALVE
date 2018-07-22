@@ -73,7 +73,7 @@ if [ ! -d assets ]
 then
 	echo -e "CREATING ASSETS DIRECTORY."
 	mkdir assets
-	chmod +x assets
+	chmod 0777 assets
 fi
 
 
