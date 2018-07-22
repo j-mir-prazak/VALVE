@@ -215,10 +215,10 @@ function ls(search) {
 	//not final state!
 	com.stderr.on('data', (data) => {
 	  // console.log(`stderr: ${data}`)
-	  var string = `${data}`
+	  var string = decoder.write(data)
 		string = string.replace(/(\r?\n)(\r?\n)+/, "\n")
 		string = string.replace(/\r?\n$/, "")
-		console.log(string+"??")
+		console.log("string+"??"")
 		return false
 	});
 
