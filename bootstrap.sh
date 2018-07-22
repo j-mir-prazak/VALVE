@@ -2,9 +2,9 @@
 export DISPLAY=:0
 
 echo -ne "\e[35m"
-echo -e "---------------------------"
-echo -e "         BOOTSTRAP.        "
-echo -e "---------------------------"
+echo -e "-----------------------------"
+echo -e "          BOOTSTRAP.         "
+echo -e "-----------------------------"
 
 #cd /home/pi/valve
 chmod +x -R *
