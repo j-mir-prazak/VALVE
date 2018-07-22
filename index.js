@@ -215,10 +215,10 @@ function ls(search) {
 	//not final state!
 	com.stderr.on('data', (data) => {
 	  // console.log(`stderr: ${data}`)
-	  var string = decoder.write(data)
-		string = string.replace(/\r?\n$/, "")
-		if ( string.match(/^ls: cannot access/)) console.log(search + " not found")
-		return false
+	  // var string = decoder.write(data)
+		// string = string.replace(/\r?\n$/, "")
+		// if ( string.match(/^ls: cannot access/)) console.log(search + " not found")
+		// return false
 	});
 
 	com.on('close', (code) => {
@@ -232,7 +232,7 @@ function ls(search) {
 			}
 		}
 		else {
-			console.log('no ttys to be found')
+			console.log('no ' + search + ' to be found')
 		}
 	});
 
