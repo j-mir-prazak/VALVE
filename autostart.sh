@@ -2,6 +2,7 @@
 export DISPLAY=:0
 
 echo -ne "\n\e[94m"
+date
 echo -e "-----------------------------"
 echo -e "          AUTOSTART.         "
 echo -e "-----------------------------"
