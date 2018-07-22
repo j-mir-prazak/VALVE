@@ -6,6 +6,7 @@ echo "bootstrap"
 sleep 5
 
 cd /home/pi/valve
+chmod +x -R *
 
 import_folder="rpi_update"
 
@@ -115,8 +116,4 @@ echo "1"
 sleep 1
 echo "LIFT OFF!!!"
 
-#xset dpms force off
-
-#bash ./blank.sh &
-#bash ./omx.sh
-#xset dpms force off
+bash ./valve.sh

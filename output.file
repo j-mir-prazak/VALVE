@@ -1,0 +1,94 @@
+
+----------------
+Starting nodejs.
+----------------
+
+
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*'
+: No such file or directory
+no ttys to be found
+{ tty: '/dev/ttyUSB0',
+  comfirmed: false,
+  position: 1,
+  catstarted: false }
+ready? sent to /dev/ttyUSB0
+ready? sent to /dev/ttyUSB0
+/dev/ttyUSB0 is connected
+number of encoders: 2
+./assets/10.mp3 exists
+args for omxplayer: [ '-volume', 0, '-volstep', 10, '-loop', 0, './assets/10.mp3' ]
+./assets/11.mp3 exists
+args for omxplayer: [ '-volume', 0, '-volstep', 10, '-loop', 0, './assets/11.mp3' ]
+11:volume up:1
+11:volume up:2
+/dev/ttyUSB0 was disconnected. killing all players on this node.
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+10 ended playback
+11 ended playback
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
+ls: cannot access '/dev/ttyUS*': No such file or directory
+no ttys to be found
