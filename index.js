@@ -132,7 +132,6 @@ function cat(tty) {
 					var player = setupPlayer(tty["position"] + "" + y)
 					if ( player != false ) players[tty["position"] + "" + y] = player
 				}
-				
 			}
 
 			else if ( string[i].length > 0 && string[i].match(/^encoder/) && tty['comfirmed']) {
