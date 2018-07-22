@@ -232,7 +232,7 @@ function ls(search) {
 			}
 		}
 		else {
-			console.log('no ' + search + ' to be found')
+			console.log(search + ' not to be found')
 		}
 	});
 
