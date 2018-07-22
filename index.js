@@ -22,7 +22,7 @@ function setupPlayer(encoderNum){
 	else {
 		console.log(asset + " exists")
 		var player = {
-		"player": omxplayer("./assets/"+number+".mp3", "both", true, -6000),
+		"player": omxplayer("./assets/"+number+".mp3", "both", true, -3000),
 		"volume": 0,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
@@ -39,7 +39,7 @@ function volumeAdjust(player, value) {
 	var player = players[player] || false
 	var value = value || false
 	if ( ! player["player"]["open"] ) return false
-	if ( value == "+" && player["volume"] < 20) {
+	if ( value == "+" && player["volume"] < 10) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp()
