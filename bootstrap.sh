@@ -1,6 +1,4 @@
 #!/bin/bash
-export DISPLAY=:0
-
 echo -ne "\e[35m"
 echo -e "-----------------------------"
 echo -e "          BOOTSTRAP.         "
