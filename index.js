@@ -147,7 +147,7 @@ function cat(tty) {
 
 				//pushes the value into the array that holds two or three values
 				if ( ! (encoderNum in players) ) {
-					console.log(encoderNum + " player doesn't exist")
+					// console.log(encoderNum + " player doesn't exist")
 					return false
 				}
 				players[encoderNum]["encoder"].push(encoderValue)
