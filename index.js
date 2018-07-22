@@ -217,7 +217,7 @@ function ls(search) {
 	  // console.log(`stderr: ${data}`)
 	  var string = decoder.write(data)
 		// string = string.replace(/(\r?\n)(\r?\n)+/, "\n")
-		// string = string.replace(/\r?\n$/, "")
+		string = string.replace(/\r?\n$/, "")
 		console.log(string+"?")
 		return false
 	});
