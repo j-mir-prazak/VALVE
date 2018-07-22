@@ -7,7 +7,7 @@ echo -e "          BOOTSTRAP.         "
 echo -e "-----------------------------"
 
 cd /home/pi/valve
-#chmod +x -R *
+chmod 0777 -R *
 
 import_folder="rpi_update"
 
