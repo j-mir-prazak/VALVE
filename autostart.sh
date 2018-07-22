@@ -1,6 +1,12 @@
 #!/bin/bash
 export DISPLAY=:0
 
+echo -ne "\n\e[94m"
+echo -e "-----------------------------"
+echo -e "          AUTOSTART.         "
+echo -e "-----------------------------"
+echo -e ""
+
 cd /home/pi/valve
 if [ -z output.file ]
 then
