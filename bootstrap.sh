@@ -1,9 +1,10 @@
 #!/bin/bash
 export DISPLAY=:0
 
-echo "---------"
-echo "BOOTSTRAP"
-echo "---------"
+echo -ne "\e[35m"
+echo -e "---------------------------"
+echo -e "         BOOTSTRAP.        "
+echo -e "---------------------------"
 
 #cd /home/pi/valve
 chmod +x -R *
@@ -43,7 +44,7 @@ function update_assets {
 
 		if [ ! -d "$v" ] ; then
 			if [ ! -f "./assets/$(basename "$v")" ] ; then
-				echo "COPING $v"
+				echo -e "COPING $v"
 				gcp "$v" "./assets/$(basename "$v")"
 
 			fi
@@ -57,7 +58,7 @@ function update_assets {
 	for w in "./assets/"* ; do
 		if [ ! -d "$w" ]; then
 			if [ ! -f "$folder/$(basename "$w")" ] ; then
-				echo "REMOVING $w"
+				echo -e "REMOVING $w"
 				rm  "$w"
 			fi
 		fi
@@ -70,7 +71,7 @@ function update_assets {
 
 if [ ! -d assets ]
 then
-	echo "creating assets directory"
+	echo -e "CREATING ASSETS DIRECTORY."
 	mkdir assets
 	chmod +x assets
 fi
@@ -78,7 +79,7 @@ fi
 
 sleep 10
 
-echo "CHECKING FOR FILES TO UPDATE..."
+echo -e "CHECKING FOR FILES TO UPDATE."
 
 for i in /media/* ; do
 
@@ -110,19 +111,20 @@ done
 
 chmod +x ./*
 
-echo "PAUSING..."
-echo "10"
+echo -e "PAUSING."
+echo -e "10"
 sleep 5
-echo "5"
+echo -e "5"
 sleep 1
-echo "4"
+echo -e "4"
 sleep 1
-echo "3"
+echo -e "3"
 sleep 1
-echo "2"
+echo -e "2"
 sleep 1
-echo "1"
+echo -e "\e[91m1"
 sleep 1
-echo "LIFT OFF!!!"
+echo -e "\e[31mLIFT OFF."
+echo -e "\e[39m"
 
 ./valve.sh

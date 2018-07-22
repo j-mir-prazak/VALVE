@@ -18,19 +18,21 @@ function setupPlayer(encoderNum){
 
 	var exists = fs.existsSync(asset);
 	if ( ! exists ) {
-		console.log(asset + " doest exist");
-		return false
+		console.log(asset + " doesn't exist");
 	}
-	else console.log(asset + " exists")
-	var player = {
+	else {
+		console.log(asset + " exists")
+		var player = {
 		"player": omxplayer("./assets/"+number+".mp3"),
 		"volume": 0,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number
+		}
+		player["player"].on("close", function() { console.log(player["number"] + " ended playback")})
+		return player
 	}
-	player["player"].on("close", function() { console.log(player["number"] + " ended playback")})
-	return player
+	return false
 }
 
 
