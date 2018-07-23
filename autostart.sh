@@ -13,6 +13,7 @@ while true;
 do read STRING <input.pipe;
  	if [ "$STRING" == "die-now" ]
  	then
+			terminate
   		kill -s SIGINT "$pid"
 	fi
 done &
@@ -36,11 +37,19 @@ echo -e "-----------------------------" >> output.file
 echo -e "" >> output.file
 echo -e "" >> output.file
 
+function terminate {
+	disown $PROC1;
+	disown $PROC2;
+	kill -9 $PROC1 2>/dev/null;
+	kill -9 $PROC2 2>/dev/null;
+	echo -e "\e[33m\n\n-----------------------------\n      PROCESS TERMINATED.    \n-----------------------------\n\n" | tee -a output.file;
+	trap SIGINT;
+	}
 
 (./bootstrap.sh >> output.file) &
 PROC1=$!
 (tail -f output.file) &
 PROC2=$!
 trap '' SIGINT
-trap 'disown $PROC2; disown $PROC1; kill -9 $PROC1 2>/dev/null; kill -9 $PROC2 2>/dev/null; echo -e "\e[33m\n\n-----------------------------\n      PROCESS TERMINATED.    \n-----------------------------\n\n" | tee -a output.file; trap SIGINT' SIGINT
+trap terminate SIGINT
 wait
