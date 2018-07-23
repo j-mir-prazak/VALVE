@@ -75,6 +75,24 @@ then
 fi
 
 
+function terminate {
+
+	kill -SIGTERM $PROC1
+	kill -SIGINT $PROC1
+
+	echo -e "\e[33m\n\n"
+	echo -e "-----------------------------"
+	echo -e "    BOOTSTRAP TERMINATED.    "
+	echo -e "-----------------------------"
+	echo -e "\n\n"
+	trap SIGINT
+	trap SIGTERM
+	kill $$
+	}
+
+trap terminate SIGINT
+trap terminate SIGTERM
+
 
 echo -e "CHECKING FOR FILES TO UPDATE."
 ##############sleep 10
@@ -107,36 +125,25 @@ for i in /media/* ; do
 
 done
 
-chmod +x ./*
+chmod 0777 -R ./*
 
-echo -e "PAUSING."
-echo -e "10"
-sleep 5
-echo -e "5"
-sleep 1
-echo -e "4"
-sleep 1
-echo -e "3"
-sleep 1
-echo -e "2"
-sleep 1
-echo -e "\e[91m1"
-sleep 1
-echo -e "\e[31mLIFT OFF."
-echo -e "\e[39m"
+# echo -e "PAUSING."
+# echo -e "10"
+# sleep 5
+# echo -e "5"
+# sleep 1
+# echo -e "4"
+# sleep 1
+# echo -e "3"
+# sleep 1
+# echo -e "2"
+# sleep 1
+# echo -e "\e[91m1"
+# sleep 1
+# echo -e "\e[31mLIFT OFF."
+# echo -e "\e[39m"
 
-function terminate {
-	echo -e "\e[33m\n\n"
-	echo -e "-----------------------------"
-	echo -e "    BOOTSTRAP TERMINATED.    "
-	echo -e "-----------------------------"
-	echo -e "\n\n"
-	disown $PROC1;
-	kill -2 $PROC1 2>/dev/null;
-	trap SIGINT;
-	}
 
-trap terminate SIGINT
-(./valve.sh) &
-PROC1=$!
+./valve.sh & PROC1=$!
+
 wait
