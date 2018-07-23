@@ -40,6 +40,7 @@ echo -e "" >> output.file
 echo -e "" >> output.file
 
 function terminate {
+	echo $PROC1 $PROC2 $PROC3
 	disown $PROC1;
 	disown $PROC2;
 	disown $PROC3;
