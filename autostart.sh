@@ -1,6 +1,22 @@
 #!/bin/bash
 cd /home/pi/valve
 
+pid=$$
+if [ -p input.pipe ]
+then
+	rm input.pipe
+fi
+
+mkfifo input.pipe
+
+while true;
+do read STRING <input.pipe;
+ 	if [ "$STRING" == "die-now" ]
+ 	then
+  		kill -s SIGINT "$pid"
+	fi
+done &
+
 if [ -f output.file ]
 then
 	echo -ne "" > output.file
