@@ -18,6 +18,8 @@ do read STRING <input.pipe;
 	fi
 done &
 
+PROC3=$!
+
 if [ -f output.file ]
 then
 	echo -ne "" > output.file
@@ -40,8 +42,10 @@ echo -e "" >> output.file
 function terminate {
 	disown $PROC1;
 	disown $PROC2;
+	disown $PROC3;
 	kill -9 $PROC1 2>/dev/null;
 	kill -9 $PROC2 2>/dev/null;
+	kill -9 $PROC3 2>/dev/null;
 	echo -e "\e[33m\n\n-----------------------------\n      PROCESS TERMINATED.    \n-----------------------------\n\n" | tee -a output.file;
 	trap SIGINT;
 	}
