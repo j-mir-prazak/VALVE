@@ -40,14 +40,22 @@ echo -e "" >> output.file
 echo -e "" >> output.file
 
 function terminate {
-	echo $PROC1 $PROC2 $PROC3
-	disown $PROC1;
-	disown $PROC2;
-	disown $PROC3;
-	kill -9 $PROC1 2>/dev/null;
-	kill -9 $PROC2 2>/dev/null;
-	kill -9 $PROC3 2>/dev/null;
-	echo -e "\e[33m\n\n-----------------------------\n      PROCESS TERMINATED.    \n-----------------------------\n\n" | tee -a output.file;
+	disown $PROC3 2>/dev/null;
+	kill -2 $PROC3 2>/dev/null;
+
+
+	echo -e "\e[33m\n\n" | tee -a output.file
+	echo -e "-----------------------------" | tee -a output.file
+	echo -e "    AUTOSTART TERMINATED.    " | tee -a output.file
+	echo -e "-----------------------------" | tee -a output.file
+	echo -e "\n\n" | tee -a output.file
+
+	disown $PROC1 2>/dev/null;
+	kill -2 $PROC1 2>/dev/null;
+
+	disown $PROC2 2>/dev/null;
+	kill -2 $PROC2 2>/dev/null;
+
 	trap SIGINT;
 	}
 
@@ -55,6 +63,5 @@ function terminate {
 PROC1=$!
 (tail -f output.file) &
 PROC2=$!
-trap '' SIGINT
 trap terminate SIGINT
 wait

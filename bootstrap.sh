@@ -75,9 +75,9 @@ then
 fi
 
 
-sleep 10
 
 echo -e "CHECKING FOR FILES TO UPDATE."
+##############sleep 10
 
 for i in /media/* ; do
 
@@ -125,4 +125,18 @@ sleep 1
 echo -e "\e[31mLIFT OFF."
 echo -e "\e[39m"
 
-./valve.sh
+function terminate {
+	echo -e "\e[33m\n\n"
+	echo -e "-----------------------------"
+	echo -e "    BOOTSTRAP TERMINATED.    "
+	echo -e "-----------------------------"
+	echo -e "\n\n"
+	disown $PROC1;
+	kill -2 $PROC1 2>/dev/null;
+	trap SIGINT;
+	}
+
+trap terminate SIGINT
+(./valve.sh) &
+PROC1=$!
+wait
