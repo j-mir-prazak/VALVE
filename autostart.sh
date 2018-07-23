@@ -30,18 +30,18 @@ function terminate {
 	echo -e "-----------------------------" | tee -a output.file
 	echo -e "\n\n" | tee -a output.file
 
-	disown $PROC1
-	kill -SIGTERM $PROC1
+	disown $PROC1 2>/dev/null
+	kill -SIGTERM $PROC1 2>/dev/null
 
-	disown $PROC2
-	kill -SIGTERM $PROC2
+	disown $PROC2 2>/dev/null
+	kill -SIGTERM $PROC2 2>/dev/null
 
-	disown $PROC3
-	kill -SIGTERM $PROC3
+	disown $PROC3 2>/dev/null
+	kill -SIGTERM $PROC3 2>/dev/null
 
 	trap SIGINT;
 	trap SIGTERM;
-	kill $$
+	kill $$ 2>/dev/null
 	# kill -2 $MAINPID
 	}
 

@@ -11,7 +11,7 @@ while true;
 do read STRING <input.pipe;
  	if [ "$STRING" == "die-now" ]
  	then
-		kill -SIGTERM $MAINPID
-		kill $$
+		kill -SIGTERM $MAINPID 2>/dev/null
+		kill $$ 2>/dev/null
 	fi
 done

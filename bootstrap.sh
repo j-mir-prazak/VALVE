@@ -77,8 +77,8 @@ fi
 
 function terminate {
 
-	kill -SIGTERM $PROC1
-	kill -SIGINT $PROC1
+	kill -SIGTERM $PROC1 2>/dev/null
+	kill -SIGINT $PROC1 2>/dev/null
 
 	echo -e "\e[33m\n\n"
 	echo -e "-----------------------------"
@@ -87,7 +87,7 @@ function terminate {
 	echo -e "\n\n"
 	trap SIGINT
 	trap SIGTERM
-	kill $$
+	kill $$ 2>/dev/null
 	}
 
 trap terminate SIGINT
