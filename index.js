@@ -178,7 +178,8 @@ function cat(tty) {
 
 		for (x in players) {
 			console.log(x)
-			console.log(tty["position"]*10)
+			console.log(x == tty["position"]*10)
+			console.log(x >= tty["position"]*10)
 
 			if ( x >= (tty["position"]*10) && x > tty["position"]+1*10) {
 				if ( "player" in players[x] && players[x].open ) {
