@@ -3,11 +3,11 @@ var StringDecoder = require('string_decoder').StringDecoder
 var events = require('events');
 var fs = require('fs');
 
-process.on('SIGHUP',  ()->console.log('CLOSING [SIGHUP]');  process.exit())
-process.on('SIGINT',  ()->console.log('CLOSING [SIGINT]');  process.exit())
-process.on('SIGQUIT', ()->console.log('CLOSING [SIGQUIT]'); process.exit())
-process.on('SIGABRT', ()->console.log('CLOSING [SIGABRT]'); process.exit())
-process.on('SIGTERM', ()->console.log('CLOSING [SIGTERM]'); process.exit())
+process.on('SIGHUP',  fucntion(){ console.log('CLOSING [SIGHUP]');  process.exit()})
+process.on('SIGINT',  fucntion(){ console.log('CLOSING [SIGINT]');  process.exit()})
+process.on('SIGQUIT', fucntion(){ console.log('CLOSING [SIGQUIT]'); process.exit()})
+process.on('SIGABRT', fucntion(){ console.log('CLOSING [SIGABRT]'); process.exit()})
+process.on('SIGTERM', fucntion(){ console.log('CLOSING [SIGTERM]'); process.exit()})
 
 var omxplayer = require('node-omxplayer')
 
