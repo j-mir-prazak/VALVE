@@ -44,8 +44,8 @@ function setupPlayer(encoderNum){
 	else {
 		console.log(asset + " exists")
 		var player = {
-		"player": omxplayer("./assets/"+number+".mp3", "both", true, -3000),
-		"volume": 0,
+		"player": omxplayer("./assets/"+number+".mp3", "both", true, 0),
+		"volume": 20,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number
@@ -66,7 +66,7 @@ function volumeAdjust(player, value) {
 	var player = players[player] || false
 	var value = value || false
 	if ( ! player["player"]["open"] ) return false
-	if ( value == "+" && player["volume"] < 10) {
+	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp()
@@ -102,11 +102,11 @@ function parseEverySecondOne(encoderArray){
 function parseEveryTwenty(encoderArray){
 	var encoder = encoderArray || false
 	var counter = 0
-	if (encoder.length == 10 ) {
+	if (encoder.length == 5 ) {
 		for( var i = 1; i < encoder.length; i++ ) {
 			if (encoder[0] == encoder[i]) counter++;
 		}
-		if ( counter >= 8 ) {
+		if ( counter >= 3 ) {
 			var value = encoder[0]
 			encoder.splice(0, encoder.length)
 			return value
