@@ -50,6 +50,7 @@ function setupPlayer(encoderNum){
 		"encoderBig":new Array(),
 		"number":number
 		}
+		
 		player["player"].on("close", function() {
 			 console.log(player["number"] + " ended playback")
 		 })
