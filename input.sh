@@ -30,6 +30,6 @@ do read STRING <input.pipe;
  	if [ "$STRING" == "die-now" ]
  	then
 		kill -SIGINT $MAINPID 2>/dev/null
-		kill -SIGINT $$ 2>/dev/null
+		# kill -SIGINT $$ 2>/dev/null
 	fi
 done
