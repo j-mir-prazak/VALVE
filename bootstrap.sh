@@ -18,7 +18,7 @@ function list_through_files {
 	for a in "$folder/"* ; do
 
 		if [ -d "$a" ] ; then
-			if [ "$a" == "$folder/assets" ] ; then
+			if [ "$a" == "$folder/EEQQ" ] ; then
 				update_assets "$a"
 			else
 				echo "COPING $a"
