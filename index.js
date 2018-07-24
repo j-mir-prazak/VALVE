@@ -180,7 +180,7 @@ function cat(tty) {
 		for (x in players) {
 			if ( x >= (tty["position"]*10) && x > tty["position"]+1*10) {
 
-				if ( players[x]["player"]["open"] ) players[x]["player"].quit()
+				if ( players[x]["player"] ) players[x]["player"].quit()
 				players[x] = {}
 			}
 		}
