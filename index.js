@@ -184,9 +184,8 @@ function cat(tty) {
 				players[x] = {}
 			}
 		}
-
+		console.log("kill ttys")
 		delete ttys[tty["tty"]]
-
 
 	});
 
