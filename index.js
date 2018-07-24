@@ -4,10 +4,26 @@ var events = require('events');
 var fs = require('fs');
 
 process.on('SIGHUP',  function(){ console.log('CLOSING [SIGHUP]'); process.emit("SIGINT"); })
-process.on('SIGINT',  function(){ console.log('CLOSING [SIGINT]'); process.exit(0)})
+process.on('SIGINT',  function(){
+	 console.log('CLOSING [SIGINT]');
+	 for (var i = 0; i < pids.length; i++) {
+		console.log("Killing: " + pids[i])
+		process.kill(-pids[i])
+ 	}
+	 process.exit(0);
+ })
 process.on('SIGQUIT', function(){ console.log('CLOSING [SIGQUIT]'); process.emit("SIGINT"); })
 process.on('SIGABRT', function(){ console.log('CLOSING [SIGABRT]'); process.emit("SIGINT"); })
 process.on('SIGTERM', function(){ console.log('CLOSING [SIGTERM]'); process.emit("SIGINT"); })
+
+var pids = new Array();
+
+function cleanPID(pid) {
+	var pid = pid || false
+	for (var i = 0; i < pids.length; i++) {
+		if ( pids[i] == pid ) pids.splice(i, 1)
+	}
+}
 
 var omxplayer = require('node-omxplayer')
 
@@ -108,13 +124,24 @@ function cat(tty) {
 	var decoder = new StringDecoder('utf8')
 	var string = ""
 
-	var stty = spawner.spawn("bash", new Array("-c", "./ttySetup.sh " + tty["tty"]))
-	var cat = spawner.spawn("bash", new Array("-c", "./ttyReader.sh " + tty["tty"]))
+	var stty = spawner.spawn("bash", new Array("./ttySetup.sh", tty["tty"]), {detached: true})
+	var cat = spawner.spawn("bash", new Array("./ttyReader.sh", tty["tty"]), {detached: true})
+	var ready
+
+	pids.push(stty["pid"])
+	stty.on('close', function(){
+		cleanPID(stty["pid"])
+	})
+	pids.push(cat["pid"])
 
 	//periodical checking until the device respondes
 	function echoReady() {
-		var ready = spawner.spawn("bash", new Array("-c", "./ttyReady.sh " + tty["tty"]))
-		console.log(tty["tty"] + " was sent 'ready?'")
+		 ready = spawner.spawn("bash", new Array("./ttyReady.sh", tty["tty"]), {detached: true})
+		 console.log(tty["tty"] + " was sent 'ready?'")
+		 pids.push(ready["pid"])
+		 ready.on('close', function(){
+			 cleanPID(ready["pid"])
+		 })
 	}
 	echoReady()
 	var echo = setInterval(function(){
@@ -181,6 +208,10 @@ function cat(tty) {
 
 	cat.on('close', (code) => {
 
+		ready.on('close', function(){
+			cleanPID(cat["pid"])
+		})
+
 
 		for (x in players) {
 
@@ -206,8 +237,10 @@ function cat(tty) {
 
 function ls(search) {
 	var search=search || false
-	var com = spawner.spawn("bash", new Array("-c", "ls " + search))
+	var com = spawner.spawn("bash", new Array("-c", "ls " + search), {detached: true})
 	var decoder = new StringDecoder('utf-8')
+
+	pids.push(com["pid"])
 
 	com.stdout.on('data', (data) => {
 	  var string = decoder.write(data)
@@ -235,6 +268,8 @@ function ls(search) {
 	});
 
 	com.on('close', (code) => {
+		cleanPID(com["pid"])
+
 		if (code == 0) {
 			for ( i in ttys ) {
 				if ( ! ttys[i]["catstarted"] ) {
