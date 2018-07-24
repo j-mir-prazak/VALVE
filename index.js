@@ -182,7 +182,7 @@ function cat(tty) {
 
 				if ( "player" in players[x] ) {
 
-					if ( players[x]["running"] ) players[x]["player"].quit()
+					if ( players[x]['player']['open'] ) players[x]["player"].quit()
 					players[x] = {}
 
 				}
