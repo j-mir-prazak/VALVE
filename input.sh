@@ -17,7 +17,6 @@ function terminate {
 
 	trap SIGINT;
 	trap SIGTERM;
-	kill -SIGINT $MAINPID 2>/dev/null
 	kill -SIGINT $$ 2>/dev/null
 	# kill -2 $MAINPID
 	}
