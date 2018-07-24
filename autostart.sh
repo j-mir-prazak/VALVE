@@ -31,12 +31,12 @@ function terminate {
 	echo -e "\n\n" | tee -a output.file
 
 	disown $PROC1 2>/dev/null
-	kill -SIGTERM $PROC1 2>/dev/null
-
+	kill -SIGTERM $PROC1
+	
 	disown $PROC2 2>/dev/null
-	kill -SIGTERM $PROC2 2>/dev/null
+	kill -SIGTERM $PROC2
 
-	# disown $PROC3 
+	# disown $PROC3
 	kill -SIGTERM $PROC3
 
 	trap SIGINT;

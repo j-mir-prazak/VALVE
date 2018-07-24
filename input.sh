@@ -1,5 +1,6 @@
 #!/bin/bash
 MAINPID=$1
+
 if [ -p input.pipe ]
 then
 	rm input.pipe
@@ -18,7 +19,7 @@ function terminate {
 	trap SIGINT;
 	trap SIGTERM;
 	kill -SIGINT $MAINPID 2>/dev/null
-	kill $$ 2>/dev/null
+	kill -SIGINT $$
 	# kill -2 $MAINPID
 	}
 
