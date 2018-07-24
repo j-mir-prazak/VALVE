@@ -3,11 +3,11 @@ var StringDecoder = require('string_decoder').StringDecoder
 var events = require('events');
 var fs = require('fs');
 
-process.on('SIGHUP',  function(){ console.log('CLOSING [SIGHUP]'); process.emit("SIGINT"); process.exit(0)})
-process.on('SIGINT',  function(){ console.log('CLOSING [SIGINT]'); process.emit("SIGINT"); process.exit(0)})
-process.on('SIGQUIT', function(){ console.log('CLOSING [SIGQUIT]'); process.emit("SIGINT"); process.exit(0)})
-process.on('SIGABRT', function(){ console.log('CLOSING [SIGABRT]'); process.emit("SIGINT"); process.exit(0)})
-process.on('SIGTERM', function(){ console.log('CLOSING [SIGTERM]'); process.emit("SIGINT"); process.exit(0)})
+process.on('SIGHUP',  function(){ console.log('CLOSING [SIGHUP]'); process.emit("SIGINT"); })
+process.on('SIGINT',  function(){ console.log('CLOSING [SIGINT]'); process.exit(0)})
+process.on('SIGQUIT', function(){ console.log('CLOSING [SIGQUIT]'); process.emit("SIGINT"); })
+process.on('SIGABRT', function(){ console.log('CLOSING [SIGABRT]'); process.emit("SIGINT"); })
+process.on('SIGTERM', function(){ console.log('CLOSING [SIGTERM]'); process.emit("SIGINT"); })
 
 var omxplayer = require('node-omxplayer')
 
