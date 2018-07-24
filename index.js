@@ -28,7 +28,9 @@ function setupPlayer(encoderNum){
 		"encoderBig":new Array(),
 		"number":number
 		}
-		player["player"].on("close", function() { console.log(player["number"] + " ended playback")})
+		player["player"].on("close", function() {
+			 console.log(player["number"] + " ended playback")
+		 })
 		return player
 	}
 	return false
@@ -177,6 +179,8 @@ function cat(tty) {
 
 		for (x in players) {
 			if ( x => tty["position"]*10 && x > tty["position"]+1*10 )
+				console.log(x)
+
 				players[x]["player"].quit()
 				players[x] = {}
 		}
