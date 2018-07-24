@@ -179,7 +179,7 @@ function cat(tty) {
 
 		for (x in players) {
 			if ( x => tty["position"]*10 && x > tty["position"]+1*10 )
-				console.log(x)
+				console.log(tty["position"]*10)
 
 				players[x]["player"].quit()
 				players[x] = {}
