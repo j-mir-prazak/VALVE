@@ -187,7 +187,7 @@ function cat(tty) {
 
 			if ( x >= (tty["position"]*10) && x < ((tty["position"]+1)*10)) {
 				console.log("yes")
-				if ( "player" in players[x] && players[x].open ) {
+				if ( "player" in players[x] ) {
 					console.log("yes2")
 					players[x]["player"].quit()
 					players[x] = {}
