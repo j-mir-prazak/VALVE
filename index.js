@@ -175,16 +175,19 @@ function cat(tty) {
 
 	cat.on('close', (code) => {
 
-		console.log(tty["tty"] + " was disconnected. killing all players on this node.")
 
 		for (x in players) {
 			if ( x >= (tty["position"]*10) && x > tty["position"]+1*10) {
-
-				if ( "player" in players[x] && players[x].open ) players[x]["player"].quit()
-				players[x] = {}
+				console.log(x)
+				omxplayer[x]
+				if ( "player" in players[x] && players[x].open ) {
+					players[x]["player"].quit()
+					players[x] = {}
+				}
 			}
 		}
 		// console.log("kill ttys")
+		console.log(tty["tty"] + " was disconnected. killing all players on this node.")
 		delete ttys[tty["tty"]]
 
 	});
