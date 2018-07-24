@@ -178,11 +178,11 @@ function cat(tty) {
 		console.log(tty["tty"] + " was disconnected. killing all players on this node.")
 
 		for (x in players) {
-			if ( x >= (tty["position"]*10) && x > tty["position"]+1*10 )
-				console.log(tty["position"]*10)
+			if ( x >= (tty["position"]*10) && x > tty["position"]+1*10 ) {
 
 				players[x]["player"].quit()
 				players[x] = {}
+			}
 		}
 
 		delete ttys[tty["tty"]]
