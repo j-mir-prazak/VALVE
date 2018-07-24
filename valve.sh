@@ -32,8 +32,8 @@ function looping {
 	  echo ""
 	  node index.js &
 		PROC2=$!
-		trap 'kill -SIGTERM $PROC2; trap SIGINT; break' SIGINT
-		trap 'kill -SIGTERM $PROC2; trap SIGTERM; break' SIGTERM
+		trap 'kill -SIGINT $PROC2; trap SIGINT; break' SIGINT
+		trap 'kill -SIGINT $PROC2; trap SIGTERM; break' SIGTERM
 		wait
 		echo ""
 	  counter=$(expr $counter + 1)
