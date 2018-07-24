@@ -17,7 +17,8 @@ function terminate {
 
 	trap SIGINT;
 	trap SIGTERM;
-	kill -SIGINT $$ 2>/dev/null
+	kill -SIGINT $MAINPID 2>/dev/null
+	kill $$ 2>/dev/null
 	# kill -2 $MAINPID
 	}
 
@@ -28,7 +29,7 @@ while true;
 do read STRING <input.pipe;
  	if [ "$STRING" == "die-now" ]
  	then
-		kill -SIGINT $MAINPID 2>/dev/null
+		terminate
 		# kill -SIGINT $$ 2>/dev/null
 	fi
 done
