@@ -50,7 +50,7 @@ function setupPlayer(encoderNum){
 		"encoderBig":new Array(),
 		"number":number
 		}
-		console.log(player["player"]["pid"])
+		console.log("player pid: " + player["player"]["pid"])
 		pids.push(player["player"]["pid"])
 		player["player"].on("close", function() {
 			 cleanPID(player["player"]["pid"])
