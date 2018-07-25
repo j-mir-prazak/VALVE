@@ -102,11 +102,11 @@ function parseEverySecondOne(encoderArray){
 function parseEveryTwenty(encoderArray){
 	var encoder = encoderArray || false
 	var counter = 0
-	if (encoder.length == 5 ) {
+	if (encoder.length == 6 ) {
 		for( var i = 1; i < encoder.length; i++ ) {
 			if (encoder[0] == encoder[i]) counter++;
 		}
-		if ( counter >= 3 ) {
+		if ( counter >= 5 ) {
 			var value = encoder[0]
 			encoder.splice(0, encoder.length)
 			return value
