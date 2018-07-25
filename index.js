@@ -51,9 +51,9 @@ function setupPlayer(encoderNum){
 		"number":number
 		}
 		console.log(player["player"]["pid"])
-		// pids.push(player["player"]["pid"])
+		pids.push(player["player"]["pid"])
 		player["player"].on("close", function() {
-			 // cleanPID(player["player"]["pid"])
+			 cleanPID(player["player"]["pid"])
 			 console.log(player["number"] + " ended playback")
 		 })
 		return player
