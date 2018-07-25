@@ -32,7 +32,7 @@ function terminate {
 
 	disown $PROC1 2>/dev/null
 	kill -SIGTERM $PROC1
-	
+
 	disown $PROC2 2>/dev/null
 	kill -SIGTERM $PROC2
 

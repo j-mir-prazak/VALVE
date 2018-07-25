@@ -66,7 +66,7 @@ function volumeAdjust(player, value) {
 	var player = players[player] || false
 	var value = value || false
 	if ( ! player["player"]["open"] ) return false
-	if ( value == "+" && player["volume"] < 20) {
+	if ( value == "+" && player["volume"] < 30) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp()
@@ -193,10 +193,10 @@ function cat(tty) {
 				var value = parseEverySecondOne(players[encoderNum]["encoder"])
 				if (value != false) {
 					players[encoderNum]["encoderBig"].push(value)
+					volumeAdjust(encoderNum, bigvalue)
 					var bigvalue = parseEveryTwenty(players[encoderNum]["encoderBig"])
 					if (bigvalue != false) {
 					// console.log("encoder1:" + value)
-						volumeAdjust(encoderNum, bigvalue)
 					}
 				}
 			}
