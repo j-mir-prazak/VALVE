@@ -190,8 +190,7 @@ function cat(tty) {
 				}
 				players[encoderNum]["encoder"].push(encoderValue)
 
-				var value = parseEverySecondOne(players[encoderNum]["encoder"])
-				console.log(value)
+				var value = parseEverySecondOne(players[encoderNum]["encoder"]
 				if (value != false) {
 					players[encoderNum]["encoderBig"].push(value)
 					volumeAdjust(encoderNum, value)
