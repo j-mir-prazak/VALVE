@@ -108,6 +108,7 @@ function parseEveryTwenty(encoderArray){
 		}
 		if ( counter >= 4 ) {
 			var value = encoder[0]
+			
 			encoder.splice(0, encoder.length)
 			return value
 		}
