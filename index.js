@@ -81,10 +81,10 @@ function volumeAdjust(player, value) {
 // parses by two moves and deals with misreads
 function parseEverySecondOne(encoderArray){
 	var encoder = encoderArray || false;
-
-	if (encoder.length == 3 ) {
-		if(encoder[0] == encoder[2]) {
-			encoder.splice(1,1)
+ 	//changed from 3 to 4; arrays indexies too
+	if (encoder.length == 4 ) {
+		if(encoder[0] == encoder[3]) {
+			encoder.splice(1,2)
 		}
 		else encoder.shift()
 	}
