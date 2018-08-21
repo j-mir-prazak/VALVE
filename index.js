@@ -31,7 +31,6 @@ var ttys = {}
 
 var players = {}
 
-
 //sets up array with player and its values
 function setupPlayer(encoderNum){
 	var number = encoderNum
