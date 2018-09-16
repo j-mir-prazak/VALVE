@@ -47,7 +47,8 @@ function setupPlayer(encoderNum){
 		"volume": 20,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
-		"number":number
+		"number":number,
+		"dbus_address":""
 		}
 		console.log("player pid: " + player["player"]["pid"])
 		pids.push(player["player"]["pid"])
