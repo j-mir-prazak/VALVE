@@ -392,11 +392,11 @@ function dbusSend(command, address, value, pid) {
 			})
 		//goes through destinations of dbus instances of (now)"vlc" and then gets pids
 		if( command == false ) {
-			console.log("doing")
 			var dbus_pids = new Array()
 			// counter of finished processes
 			var counter = 0;
 			dbus_output.forEach( function(val, index) {
+				console.log(val)
 				var destination = val
 				var dbus_command = dbusSend("pid", val).on('done', () => {
 					counter++
