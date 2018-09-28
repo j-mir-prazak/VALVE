@@ -59,6 +59,10 @@ function setupPlayer(encoderNum){
 				 cleanPID(player["player"]["pid"])
 				 console.log(player["number"] + " ended playback")
 			 })
+			player["player"].on("playing", function() {
+
+				 console.log(player["number"] + " playing playback")
+			 })
 
 			 		// player["player"].on("playing", function(){
 			 			//add logic for dbus_address search
