@@ -107,6 +107,7 @@ function setupPlayer(encoderNum){
 
 		return player
 	}
+
 	return false
 }
 
