@@ -59,7 +59,7 @@ function setupPlayer(encoderNum){
 				 cleanPID(player["player"]["pid"])
 				 console.log(player["number"] + " ended playback")
 			 })
-			player["player"].on("playing", function() {
+			player["player"].on("playback", function() {
 
 				 console.log(player["number"] + " playing playback")
 			 })
