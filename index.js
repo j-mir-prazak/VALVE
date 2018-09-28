@@ -90,6 +90,7 @@ function setupPlayer(encoderNum){
 			 								var volume = dbusSend("volume", destination).on('done', function(){
 			 									//sets the lowest volume value
 			 									player["player"]["min_volume"] = volume.dbus_output
+												console.log(volume.dbus_output)
 			 									//sends dbus setVolume message
 			 									var setVolume = dbusSend("setVolume", destination, 0).on('done', function(){
 			 										console.log("player" + number + " volume set to 20")
