@@ -384,6 +384,7 @@ function dbusSend(command, address, value, pid) {
 	dbus.on('close', (code) => {
 		cleanPID(dbus["pid"])
 		output = output.split(/\r?\n/)
+		console.log(output)
 		output.forEach( function( val, index ){
 			if ( val == "" ) return false
 			var helper = dbusHelper(val, command)
@@ -396,7 +397,6 @@ function dbusSend(command, address, value, pid) {
 			// counter of finished processes
 			var counter = 0;
 			dbus_output.forEach( function(val, index) {
-				console.log(val)
 				var destination = val
 				var dbus_command = dbusSend("pid", val).on('done', () => {
 					counter++
