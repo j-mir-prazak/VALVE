@@ -63,7 +63,7 @@ function setupPlayer(encoderNum){
 
 				 console.log(player["number"] + " playing playback")
 			 })
-			 if(player["player"]["open"]) console.log("playing")
+			 if(player["player"]["open"]) {
 
 			 		// player["player"].on("playing", function(){
 			 			//add logic for dbus_address search
@@ -102,6 +102,7 @@ function setupPlayer(encoderNum){
 			 					})
 			 				}
 			 			})
+					}
 
 
 			 			// ---- dbus setup done ----- //
