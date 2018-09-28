@@ -53,55 +53,55 @@ function setupPlayer(encoderNum){
 		"min_volume":false
 		}
 
-		player["player"].on("playing", function(){
-			//add logic for dbus_address search
-			//add dbus_message for lowest volume number search (averages?)
-			//add dbus_message for setting the volume for the highest
-
-			// ---- dbus code ----- //
-
-
-			//gets all dbus destinations
-			var dbus_destinations = dbusSend();
-
-			dbus_destinations.on('done', function() {
-				console.log("destinations")
-				var destinations = dbus_destinations.dbus_output
-				if ( typeof destinations == 'object' && destinations.length > 0) {
-					//val == dbus destination
-					destinations.forEach(function(val, index) {
-						//check pids for destination
-						var pid = dbusSend("pid", val).on('done', function (destination) {
-							var destination = destination
-							if ( player["player"]["pid"] == pid.dbus_output ) {
-								player["player"]["dbus_address"] = destination
-								console.log("player" + number + " dbus address: " + destination)
-								var volume = dbusSend("volume", destination).on('done', function(){
-									//sets the lowest volume value
-									player["player"]["min_volume"] = volume.dbus_output
-									//sends dbus setVolume message
-									var setVolume = dbusSend("setVolume", destination, 0).on('done', function(){
-										console.log("player" + number + " volume set to 20")
-									})
-								})
-							}
-						//binds destination value for dbusSend("pid"...)
-						}.bind(this, val))
-					})
-				}
-			})
-
-		})
-
-			// ---- dbus setup done ----- //
-
-
 			console.log("player pid: " + player["player"]["pid"])
 			pids.push(player["player"]["pid"])
 			player["player"].on("close", function() {
 				 cleanPID(player["player"]["pid"])
 				 console.log(player["number"] + " ended playback")
 			 })
+
+			 		// player["player"].on("playing", function(){
+			 			//add logic for dbus_address search
+			 			//add dbus_message for lowest volume number search (averages?)
+			 			//add dbus_message for setting the volume for the highest
+
+			 			// ---- dbus code ----- //
+
+
+			 			//gets all dbus destinations
+			 			var dbus_destinations = dbusSend();
+
+			 			dbus_destinations.on('done', function() {
+			 				console.log("destinations")
+			 				var destinations = dbus_destinations.dbus_output
+			 				if ( typeof destinations == 'object' && destinations.length > 0) {
+			 					//val == dbus destination
+			 					destinations.forEach(function(val, index) {
+			 						//check pids for destination
+			 						var pid = dbusSend("pid", val).on('done', function (destination) {
+			 							var destination = destination
+			 							if ( player["player"]["pid"] == pid.dbus_output ) {
+			 								player["player"]["dbus_address"] = destination
+			 								console.log("player" + number + " dbus address: " + destination)
+			 								var volume = dbusSend("volume", destination).on('done', function(){
+			 									//sets the lowest volume value
+			 									player["player"]["min_volume"] = volume.dbus_output
+			 									//sends dbus setVolume message
+			 									var setVolume = dbusSend("setVolume", destination, 0).on('done', function(){
+			 										console.log("player" + number + " volume set to 20")
+			 									})
+			 								})
+			 							}
+			 						//binds destination value for dbusSend("pid"...)
+			 						}.bind(this, val))
+			 					})
+			 				}
+			 			})
+
+
+			 			// ---- dbus setup done ----- //
+
+
 
 		 // })
 
