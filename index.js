@@ -53,8 +53,7 @@ function setupPlayer(encoderNum){
 		"min_volume":false
 		}
 
-		console.log(player["player"])
-		player["player"].on("playing", function(){
+		// player["player"].on("playing", function(){
 			//add logic for dbus_address search
 			//add dbus_message for lowest volume number search (averages?)
 			//add dbus_message for setting the volume for the highest
@@ -101,7 +100,7 @@ function setupPlayer(encoderNum){
 				 console.log(player["number"] + " ended playback")
 			 })
 
-		 })
+		 // })
 
 		return player
 	}
