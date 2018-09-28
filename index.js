@@ -76,9 +76,7 @@ function setupPlayer(encoderNum){
 
 			 			//gets all dbus destinations
 			 			var dbus_destinations = dbusSend();
-						console.log("dbus")
 			 			dbus_destinations.on('done', function() {
-			 				console.log("destinations")
 			 				var destinations = dbus_destinations.dbus_output
 			 				if ( typeof destinations == 'object' && destinations.length > 0) {
 			 					//val == dbus destination
@@ -395,7 +393,6 @@ function dbusSend(command, address, value, pid) {
 	dbus.on('close', (code) => {
 		cleanPID(dbus["pid"])
 		output = output.split(/\r?\n/)
-		console.log(output)
 		output.forEach( function( val, index ){
 			if ( val == "" ) return false
 			var helper = dbusHelper(val, command)
@@ -465,7 +462,6 @@ function dbusHelper(val, command) {
 	else if ( command == false ) {
 		//dbus instance we want - now vlc, should be omx
 		if ( val.match(/string \".*omxplayer/) ) {
-			console.log("match")
 			string = val.replace(/string /, "")
 			string = string.replace(/^.*?\"(.*)\"/,"$1")
 		}
