@@ -64,6 +64,7 @@ function setupPlayer(encoderNum){
 			//gets all dbus destinations
 			var dbus_destinations = dbusSend();
 
+			console.log("pre")
 			dbus_destinations.on('done', function() {
 				console.log("destinations")
 				var destinations = dbus_destinations.dbus_output
