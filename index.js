@@ -453,6 +453,7 @@ function dbusHelper(val, command) {
 	else if ( command == false ) {
 		//dbus instance we want - now vlc, should be omx
 		if ( val.match(/string \".*omx.*/) ) {
+			console.log("match")
 			string = val.replace(/string /, "")
 			string = string.replace(/^.*?\"(.*)\"/,"$1")
 		}
