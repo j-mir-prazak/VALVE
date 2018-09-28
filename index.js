@@ -54,7 +54,7 @@ function setupPlayer(encoderNum){
 		}
 
 		player["player"].on("playing", function(){
-
+			console.log("playing")
 			//add logic for dbus_address search
 			//add dbus_message for lowest volume number search (averages?)
 			//add dbus_message for setting the volume for the highest
