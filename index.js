@@ -48,14 +48,61 @@ function setupPlayer(encoderNum){
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number,
-		"dbus_address":""
+		"dbus_address":"",
+		"max_volume":false,
+		"min_volume":false
 		}
-		console.log("player pid: " + player["player"]["pid"])
-		pids.push(player["player"]["pid"])
-		player["player"].on("close", function() {
-			 cleanPID(player["player"]["pid"])
-			 console.log(player["number"] + " ended playback")
+
+		player["player"].on("playing", function(){
+
+			//add logic for dbus_address search
+			//add dbus_message for lowest volume number search (averages?)
+			//add dbus_message for setting the volume for the highest
+
+			// ---- dbus code ----- //
+
+
+			//gets all dbus destinations
+			var dbus_destinations = dbusSend();
+
+			dbus_destinations.on('done', function() {
+				var destinations = dbus_destinations.dbus_output
+				if ( typeof destinations == 'object' && destinations.length > 0) {
+					//val == dbus destination
+					destinations.forEach(function(val, index) {
+						//check pids for destination
+						var pid = dbusSend("pid", val).on('done', function (destination) {
+							var destination = destination
+							if ( player["player"]["pid"] == pid.dbus_output ) {
+								player["player"]["dbus_address"] = destination
+								console.log("player" + number + " dbus address: " + destination)
+								var volume = dbusSend("volume", destination).on('done', function(){
+									//sets the lowest volume value
+									player["player"]["min_volume"] = volume.dbus_output
+									//sends dbus setVolume message
+									var setVolume = dbusSend("setVolume", destination, 0).on('done', function(){
+										console.log("player" + number + " volume set to 20")
+									})
+								})
+							}
+						//binds destination value for dbusSend("pid"...)
+						}.bind(this, val))
+					})
+				}
+			})
+
+			// ---- dbus setup done ----- //
+
+
+			console.log("player pid: " + player["player"]["pid"])
+			pids.push(player["player"]["pid"])
+			player["player"].on("close", function() {
+				 cleanPID(player["player"]["pid"])
+				 console.log(player["number"] + " ended playback")
+			 })
+
 		 })
+
 		return player
 	}
 	return false
@@ -66,6 +113,7 @@ function volumeAdjust(player, value) {
 	var player = players[player] || false
 	var value = value || false
 	if ( ! player["player"]["open"] ) return false
+	if ( ! player["player"]["min_volume"] ) return false
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
@@ -222,7 +270,7 @@ function cat(tty) {
 			if ( x >= (tty["position"]*10) && x < ((tty["position"]+1)*10)) {
 
 				if ( "player" in players[x] ) {
-
+					//add pids cleanup after quit()
 					if ( players[x]['player']['open'] ) players[x]["player"].quit()
 					players[x] = {}
 
@@ -290,6 +338,132 @@ function ls(search) {
 
 	return com;
 }
+
+
+// ------------------ dbus code ----------------------- //
+
+function dbusSend(command, address, value, pid) {
+
+	var command=command || ""
+	var address=address || ""
+	var value=value || ""
+	var pid=pid || false
+
+	var parameters = ""
+	if ( command != "" && value == "" ) parameters = " " + command + " " + address
+	else if ( command != "" ) parameters = " " + command + " " + address + " " + value
+
+	var dbus = spawner.spawn("bash", new Array("-c", "./dbus.sh" + parameters), {detached: true})
+
+	var decoder = new StringDecoder('utf-8')
+
+	var dbus_instances = new Array()
+	var output = ""
+	var dbus_output = new Array()
+
+	pids.push(dbus["pid"])
+
+	dbus.stdout.on('data', (data) => {
+	  var string = decoder.write(data)
+		string=string.split(/\r?\n/)
+		for( var i = 0; i < string.length; i++) {
+			if ( string[i].length > 0 ) {
+				output+=string[i]+"\r\n"
+			}
+		}
+	});
+	//not final state!
+	dbus.stderr.on('data', (data) => {
+	  console.log(`stderr: ${data}`)
+	  // var string = decoder.write(data)
+		// string = string.replace(/\r?\n$/, "")
+		// if ( string.match(/^ls: cannot access/)) console.log(search + " not found")
+		// return false
+	});
+
+	dbus.on('close', (code) => {
+		cleanPID(dbus["pid"])
+		output = output.split(/\r?\n/)
+		output.forEach( function( val, index ){
+			if ( val == "" ) return false
+			var helper = dbusHelper(val, command)
+			if ( helper == false ) return false
+			dbus_output.push( helper )
+			})
+		//goes through destinations of dbus instances of (now)"vlc" and then gets pids
+		if( command == false ) {
+			var dbus_pids = new Array()
+			// counter of finished processes
+			var counter = 0;
+			dbus_output.forEach( function(val, index) {
+				var destination = val
+				var dbus_command = dbusSend("pid", val).on('done', () => {
+					counter++
+					var dbus_result = dbus_command["dbus_output"]
+					//if it is not an array or is not one item long
+					//if return pid doesn't much the one we want
+					if ( typeof dbus_result == 'object' && dbus_result.length == 1 && dbus_result[0] != pid ) {
+ 						dbus_pids.push(destination)
+					}
+					//when all sub-process are finished
+					if ( counter == dbus_output.length ) {
+						dbus["dbus_output"] = dbus_pids
+						dbus.emit('done')
+					}
+				})
+			})
+		}
+		//gets pid for destination
+		else if ( command == "pid" ) {
+			dbus["dbus_output"] = dbus_output
+			dbus.emit('done')
+		}
+		else if ( command == "volume" ) {
+			dbus["dbus_output"] = dbus_output
+			dbus.emit('done')
+		}
+		else if ( command == "setVolume" ) {
+			dbus["dbus_output"] = "volume " + value + " set for " + pid
+			dbus.emit('done')
+		}
+		else return false
+	});
+
+	return dbus;
+}
+
+function dbusHelper(val, command) {
+	var val = val || false
+	var command = command || false
+
+	var string = ""
+
+	if ( command == "pid" || command == "volume") {
+		if ( val != "" && val.match(/^\ +/) ) {
+			string = val.replace(/.*\ (\d.*)/, "$1")
+		}
+		else return false
+	}
+	else if ( command == "setVolume") {
+		if ( val != "" && val.match(/^\ +/) ) {
+			string = val.replace(/.*\ (\d.*)/, "$1")
+		}
+		else return false
+	}
+	else if ( command == false ) {
+		//dbus instance we want - now vlc, should be omx
+		if ( val.match(/string \".*vlc/) ) {
+			string = val.replace(/string /, "")
+			string = string.replace(/^.*?\"(.*)\"/,"$1")
+		}
+		else return false
+	}
+	else return false
+	return string
+}
+
+
+// -------------------- calling code ----------------- //
 
 // player1['instance'] = mplayer("vienna_calling_song.mp3")
 // player1['instance'].on('close', function() {
