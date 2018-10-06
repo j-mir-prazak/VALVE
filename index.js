@@ -44,7 +44,7 @@ function setupPlayer(encoderNum){
 		console.log(asset + " exists")
 		var player = {
 		"player": omxplayer("./assets/"+number+".mp3", "local", true, -4000),
-		"volume": 20,
+		"volume": 0,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number,
@@ -67,7 +67,7 @@ function setupPlayer(encoderNum){
 			 })
 
 			 setTimeout(function() {
-				 if(player["player"]["open"]) {
+				 if( player["player"]["open"] ) {
 			 		// player["player"].on("playing", function(){
 			 			//add logic for dbus_address search
 			 			//add dbus_message for lowest volume number search (averages?)
@@ -95,6 +95,7 @@ function setupPlayer(encoderNum){
 												console.log(volume.dbus_output)
 			 									//sends dbus setVolume message
 			 									var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
+													player["volume"] = 20;
 			 										console.log("player" + number + " volume set to 20");
 			 									})
 			 								})
@@ -133,6 +134,7 @@ function volumeAdjust(player, value) {
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
+
 		if ( player["volume"] == 20 ) {
 			var setVolume = dbusSend("setVolume", player["dbus_address"], player["max_volume"]).on('done', function(){
 				console.log(player["number"] + " volume set to 20");
@@ -140,14 +142,17 @@ function volumeAdjust(player, value) {
 		}
 		else player["player"].volUp()
 	}
+
 	else if ( value == "-" && player["volume"] > 0) {
 		player["volume"]--;
 		console.log(player["number"]+":volume down:"+player["volume"]);
+
 		if ( player["volume"] == 0 ) {
 			var setVolume = dbusSend("setVolume", player["dbus_address"], player["min_volume"]).on('done', function(){
 				console.log(player["number"] + " volume set to 0");
 			})
 		}
+
 		else player["player"].volDown()
 	}
 
