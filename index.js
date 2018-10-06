@@ -95,14 +95,7 @@ function setupPlayer(encoderNum){
 												console.log(volume.dbus_output)
 			 									//sends dbus setVolume message
 			 									var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
-			 										console.log("player" + number + " volume set to 20")
-													volumeAdjust(player["player"], "-");
-													volumeAdjust(player["player"], "-");
-													volumeAdjust(player["player"], "-");
-													volumeAdjust(player["player"], "-");
-													volumeAdjust(player["player"], "-");
-													volumeAdjust(player["player"], "+");
-													volumeAdjust(player["player"], "-");
+			 										console.log("player" + number + " volume set to 20");
 			 									})
 			 								})
 			 							}
