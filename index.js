@@ -114,10 +114,12 @@ function setupPlayer(encoderNum){
 }
 
 function volumeFixer(player, value) {
+
 			var player = player || false;
 			var value = value || false;
 
-			if ( ! player || ! value ) return false
+			if ( ! player ) return false
+			if ( ! value ) return false
 
 			if (value == "higher") {
 			console.log(player["number"] + " fixing volume to 20");
