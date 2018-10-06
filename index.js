@@ -43,7 +43,7 @@ function setupPlayer(encoderNum){
 	else {
 		console.log(asset + " exists")
 		var player = {
-		"player": omxplayer("./assets/"+number+".mp3", "local", true, 0),
+		"player": omxplayer("./assets/"+number+".mp3", "local", true, -300),
 		"volume": 20,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
@@ -155,7 +155,10 @@ function volumeAdjust(player, value) {
 			player["setup_done"] = false;
 			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
 
-				if ( getVolume.dbus_output > player["max_volume"] ) volumeFixer(player, "higher")
+				if ( getVolume.dbus_output > player["max_volume"] ) {
+					console.log(player["number"] + " volume fixing");
+					volumeFixer(player, "higher");
+					}
 				else player["setup_done"] = true;
 
 				})
@@ -172,7 +175,10 @@ function volumeAdjust(player, value) {
 			player["setup_done"] = false;
 			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
 
-				if ( getVolume.dbus_output < player["min_volume"] ) volumeFixer(player, "lowers")
+				if ( getVolume.dbus_output < player["min_volume"] ) {
+					console.log(player["number"] + " volume fixing");
+					volumeFixer(player, "lowers")
+					}
 				else player["setup_done"] = true;
 
 				})
