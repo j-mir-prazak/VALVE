@@ -43,14 +43,14 @@ function setupPlayer(encoderNum){
 	else {
 		console.log(asset + " exists")
 		var player = {
-		"player": omxplayer("./assets/"+number+".mp3", "local", true, -4000),
-		"volume": 0,
+		"player": omxplayer("./assets/"+number+".mp3", "local", true, 0),
+		"volume": 20,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number,
 		"dbus_address":"",
 		"max_volume":1,
-		"min_volume":false,
+		"min_volume":0.01,
 		"setup_done":false
 		}
 
@@ -90,17 +90,7 @@ function setupPlayer(encoderNum){
 			 							if ( player["player"]["pid"] == pid.dbus_output ) {
 			 								player["dbus_address"] = destination
 			 								console.log("player" + number + " dbus address: " + destination)
-			 								var volume = dbusSend("volume", destination).on('done', function(){
-			 									//sets the lowest volume value
-			 									player["min_volume"] = volume.dbus_output
-												console.log(volume.dbus_output)
-			 									//sends dbus setVolume message
-			 									var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
-													player["volume"] = 20;
-			 										console.log("player" + number + " volume set to 20");
-													player["setup_done"] = true;
-			 									})
-			 								})
+											player["setup_done"] = true;
 			 							}
 			 						//binds destination value for dbusSend("pid"...)
 			 						}.bind(this, val))
@@ -123,6 +113,29 @@ function setupPlayer(encoderNum){
 	return false
 }
 
+function volumeFixer(player, value) {
+			var player = player || false;
+			var value = value || false;
+
+			console.log(player["number"] + " fixing volume to 20");
+			if ( ! player || ! value ) return false
+
+			if (value == "higher") {
+			player["player"].volumeDown();
+			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
+				if ( getVolume.dbus_output > player["max_volume"] ) volumeFixer(player, "higher")
+				else player["setup_done"] = true
+				})
+			}
+			else if ( value == "lower") {
+				player["player"].volumeUp();
+				var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
+					if ( getVolume.dbus_output < player["min"] ) volumeFixer(player, "lower")
+					else player["setup_done"] = true
+					})
+			}
+}
+
 
 function volumeAdjust(player, value) {
 
@@ -134,36 +147,35 @@ function volumeAdjust(player, value) {
 
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
+		player["player"].volumeUp();
 
 		if ( player["volume"] == 20 ) {
-			var setVolume = dbusSend("setVolume", player["dbus_address"], player["max_volume"]).on('done', function(){
-				console.log(player["number"] + " volume set to 20");
-			})
+			player["setup_done"] = false;
+			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
+
+				if ( getVolume.dbus_output > player["max_volume"] ) volumeFixer(player, "higher")
+				else player["setup_done"] = true;
+
+				})
+			}
 		}
 
-		else {
-			var setVolume = dbusSend("volumeUp", player["dbus_address"]).on('done', function(){
-				console.log(player["number"]+":volume up:"+player["volume"]);
-
-			})
-		}
-
-	}
 
 	else if ( value == "-" && player["volume"] > 0) {
 		player["volume"]--;
+		player["player"].volumeDown();
 
 		if ( player["volume"] == 0 ) {
-			var setVolume = dbusSend("setVolume", player["dbus_address"], player["min_volume"]).on('done', function(){
-				console.log(player["number"] + " volume set to 0");
-			})
+			player["setup_done"] = false;
+			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
+
+				if ( getVolume.dbus_output < player["min_volume"] ) volumeFixer(player, "lowers")
+				else player["setup_done"] = true;
+
+				})
+			}
+
 		}
-		else {
-			var setVolume = dbusSend("volumeDown", player["dbus_address"]).on('done', function(){
-				console.log(player["number"]+":volume down:"+player["volume"]);
-			})
-		}
-	}
 
 }
 
