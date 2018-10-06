@@ -127,7 +127,7 @@ function volumeAdjust(player, value) {
 	if ( typeof player["player"] == "undefined") return false
 	if ( ! player["player"]["open"] ) return false
 	if ( player["player"]["min_volume"] === false) return false
-	console.log(player["dbus_address"])
+	
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
 		if ( player["volume"] == 20 ) {
