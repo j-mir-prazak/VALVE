@@ -121,14 +121,14 @@ function volumeFixer(player, value) {
 			if ( ! player || ! value ) return false
 
 			if (value == "higher") {
-			player["player"].volumeDown();
+			player["player"].volDown();
 			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
 				if ( getVolume.dbus_output > player["max_volume"] ) volumeFixer(player, "higher")
 				else player["setup_done"] = true
 				})
 			}
 			else if ( value == "lower") {
-				player["player"].volumeUp();
+				player["player"].volUp();
 				var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
 					if ( getVolume.dbus_output < player["min"] ) volumeFixer(player, "lower")
 					else player["setup_done"] = true
@@ -147,7 +147,7 @@ function volumeAdjust(player, value) {
 
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
-		player["player"].volumeUp();
+		player["player"].volUp();
 
 		if ( player["volume"] == 20 ) {
 			player["setup_done"] = false;
@@ -163,7 +163,7 @@ function volumeAdjust(player, value) {
 
 	else if ( value == "-" && player["volume"] > 0) {
 		player["volume"]--;
-		player["player"].volumeDown();
+		player["player"].volDown();
 
 		if ( player["volume"] == 0 ) {
 			player["setup_done"] = false;
