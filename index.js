@@ -132,7 +132,7 @@ function volumeAdjust(player, value) {
 		player["volume"]++;
 		if ( player["volume"] == 20 ) {
 			var setVolume = dbusSend("setVolume", player["dbus_address"], player["max_volume"]).on('done', function(){
-				console.log("player" + number + " volume set to 20");
+				console.log("player" + player["number"] + " volume set to 20");
 			})
 		}
 		console.log(player["number"]+":volume up:"+player["volume"]);
@@ -142,7 +142,7 @@ function volumeAdjust(player, value) {
 		player["volume"]--;
 		if ( player["volume"] == 0 ) {
 			var setVolume = dbusSend("setVolume", player["dbus_address"], player["min_volume"]).on('done', function(){
-				console.log("player" + number + " volume set to 20");
+				console.log("player" + player["number"] + " volume set to 20");
 			})
 		}
 		console.log(player["number"]+":volume down:"+player["volume"]);
