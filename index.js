@@ -131,7 +131,7 @@ function setupPlayer(encoderNum){
 function volumeAdjust(player, value) {
 	var player = players[player] || false
 	var value = value || false
-	if ( ! player["player"]) return false
+	if ( typeof player["player"] == "undefined") return false
 	if ( ! player["player"]["open"] ) return false
 	if ( ! player["player"]["min_volume"] ) return false
 
