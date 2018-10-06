@@ -131,7 +131,7 @@ function volumeAdjust(player, value) {
 	if ( typeof player["player"] == "undefined") return false
 
 	if ( ! player["player"]["open"] ) return false
-	if ( ! player["player"]["setup_done"] ) return false
+	if ( ! player["setup_done"] ) return false
 
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
