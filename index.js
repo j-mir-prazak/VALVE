@@ -138,7 +138,7 @@ function volumeAdjust(player, value) {
 				console.log(player["number"] + " volume set to 20");
 			})
 		}
-		player["player"].volUp()
+		else player["player"].volUp()
 	}
 	else if ( value == "-" && player["volume"] > 0) {
 		player["volume"]--;
@@ -148,7 +148,7 @@ function volumeAdjust(player, value) {
 				console.log(player["number"] + " volume set to 0");
 			})
 		}
-		player["player"].volDown()
+		else player["player"].volDown()
 	}
 
 }
