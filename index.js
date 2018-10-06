@@ -89,15 +89,15 @@ function setupPlayer(encoderNum){
 			 							if ( player["player"]["pid"] == pid.dbus_output ) {
 			 								player["player"]["dbus_address"] = destination
 			 								console.log("player" + number + " dbus address: " + destination)
-			 								// var volume = dbusSend("volume", destination).on('done', function(){
-			 								// 	//sets the lowest volume value
-			 								// 	player["player"]["min_volume"] = volume.dbus_output
-											// 	console.log(volume.dbus_output)
-			 								// 	//sends dbus setVolume message
-			 								// 	// var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
-			 								// 	// 	console.log("player" + number + " volume set to 20")
-			 								// 	// })
-			 								// })
+			 								var volume = dbusSend("volume", destination).on('done', function(){
+			 									//sets the lowest volume value
+			 									player["player"]["min_volume"] = volume.dbus_output
+												console.log(volume.dbus_output)
+			 									//sends dbus setVolume message
+			 									// var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
+			 									// 	console.log("player" + number + " volume set to 20")
+			 									// })
+			 								})
 			 							}
 			 						//binds destination value for dbusSend("pid"...)
 			 						}.bind(this, val))
