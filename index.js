@@ -43,7 +43,7 @@ function setupPlayer(encoderNum){
 	else {
 		console.log(asset + " exists")
 		var player = {
-		"player": omxplayer("./assets/"+number+".mp3", "both", true, 0),
+		"player": omxplayer("./assets/"+number+".mp3", "both", true, 1),
 		"volume": 20,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
@@ -94,7 +94,7 @@ function setupPlayer(encoderNum){
 			 									player["player"]["min_volume"] = volume.dbus_output
 												console.log(volume.dbus_output)
 			 									//sends dbus setVolume message
-			 									var setVolume = dbusSend("setVolume", destination, 1).on('done', function(){
+			 									var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
 			 										console.log("player" + number + " volume set to 20")
 			 									})
 			 								})
