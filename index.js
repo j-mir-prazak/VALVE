@@ -96,6 +96,13 @@ function setupPlayer(encoderNum){
 			 									//sends dbus setVolume message
 			 									var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
 			 										console.log("player" + number + " volume set to 20")
+													volumeAdjust(player["player"], "-");
+													volumeAdjust(player["player"], "-");
+													volumeAdjust(player["player"], "-");
+													volumeAdjust(player["player"], "-");
+													volumeAdjust(player["player"], "-");
+													volumeAdjust(player["player"], "+");
+													volumeAdjust(player["player"], "-");
 			 									})
 			 								})
 			 							}
@@ -126,6 +133,7 @@ function volumeAdjust(player, value) {
 	var value = value || false
 	if ( ! player["player"]["open"] ) return false
 	if ( ! player["player"]["min_volume"] ) return false
+
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
