@@ -11,6 +11,16 @@ variable=`dbus-send --print-reply=literal --session --reply-timeout=500 --dest=$
 
 ;;
 
+volumeUp)
+variable=`dbus-send --print-reply=literal --session --reply-timeout=500 --dest=$2 /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Action int32:18`
+
+;;
+
+volumeDown)
+variable=`dbus-send --print-reply=literal --session --reply-timeout=500 --dest=$2 /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Action int32:17`
+
+;;
+
 pid)
 variable=`dbus-send --print-reply --session --dest=org.freedesktop.DBus --reply-timeout=500 /org/freedesktop/DBus org.freedesktop.DBus.GetConnectionUnixProcessID string:$2`
 
