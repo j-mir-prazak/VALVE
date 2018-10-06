@@ -86,7 +86,7 @@ function setupPlayer(encoderNum){
 			 						//check pids for destination
 			 						var pid = dbusSend("pid", val).on('done', function (destination) {
 			 							var destination = destination
-			 							if ( player["pid"]["pid"] == pid.dbus_output ) {
+			 							if ( player["player"]["pid"] == pid.dbus_output ) {
 			 								player["dbus_address"] = destination
 			 								console.log("player" + number + " dbus address: " + destination)
 			 								var volume = dbusSend("volume", destination).on('done', function(){
