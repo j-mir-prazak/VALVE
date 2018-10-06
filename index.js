@@ -50,7 +50,7 @@ function setupPlayer(encoderNum){
 		"number":number,
 		"dbus_address":"",
 		"max_volume":1,
-		"min_volume":false
+		"min_volume":0
 		}
 
 			console.log("player pid: " + player["player"]["pid"])
