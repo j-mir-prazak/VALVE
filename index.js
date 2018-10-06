@@ -137,26 +137,27 @@ function volumeAdjust(player, value) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
 
+		player["player"].volUp()
+
 		if ( player["volume"] == 20 ) {
 			var setVolume = dbusSend("setVolume", player["dbus_address"], player["max_volume"]).on('done', function(){
 				console.log(player["number"] + " volume set to 20");
 			})
 		}
-		
-		else player["player"].volUp()
+
 	}
 
 	else if ( value == "-" && player["volume"] > 0) {
 		player["volume"]--;
 		console.log(player["number"]+":volume down:"+player["volume"]);
 
+		player["player"].volDown()
+
 		if ( player["volume"] == 0 ) {
 			var setVolume = dbusSend("setVolume", player["dbus_address"], player["min_volume"]).on('done', function(){
 				console.log(player["number"] + " volume set to 0");
 			})
 		}
-
-		else player["player"].volDown()
 	}
 
 }
