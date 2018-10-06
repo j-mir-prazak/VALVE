@@ -185,7 +185,7 @@ function volumeAdjust(player, value) {
 
 				if ( getVolume.dbus_output < player["min_volume"] ) {
 					console.log(player["number"] + " volume fixing");
-					volumeFixer(player, "lowers")
+					volumeFixer(player, "lower")
 					}
 				else player["setup_done"] = true;
 
