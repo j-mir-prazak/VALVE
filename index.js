@@ -86,12 +86,12 @@ function setupPlayer(encoderNum){
 			 						//check pids for destination
 			 						var pid = dbusSend("pid", val).on('done', function (destination) {
 			 							var destination = destination
-			 							if ( player["player"]["pid"] == pid.dbus_output ) {
-			 								player["player"]["dbus_address"] = destination
+			 							if ( player["pid"] == pid.dbus_output ) {
+			 								player["dbus_address"] = destination
 			 								console.log("player" + number + " dbus address: " + destination)
 			 								var volume = dbusSend("volume", destination).on('done', function(){
 			 									//sets the lowest volume value
-			 									player["player"]["min_volume"] = volume.dbus_output
+			 									player["min_volume"] = volume.dbus_output
 												console.log(volume.dbus_output)
 			 									//sends dbus setVolume message
 			 									var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
