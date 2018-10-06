@@ -125,19 +125,18 @@ function setupPlayer(encoderNum){
 
 
 function volumeAdjust(player, value) {
+	
 	var player = players[player] || false
 	var value = value || false
 
-	if ( typeof player["player"] == "undefined") return false
-
-	if ( ! player["player"]["open"] ) return false
 	if ( ! player["setup_done"] ) return false
+	if ( ! player["player"]["open"] ) return false
 
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
 
-		player["player"].volUp()
+		player["player"].volUp();
 
 		if ( player["volume"] == 20 ) {
 			var setVolume = dbusSend("setVolume", player["dbus_address"], player["max_volume"]).on('done', function(){
@@ -151,7 +150,7 @@ function volumeAdjust(player, value) {
 		player["volume"]--;
 		console.log(player["number"]+":volume down:"+player["volume"]);
 
-		player["player"].volDown()
+		player["player"].volDown();
 
 		if ( player["volume"] == 0 ) {
 			var setVolume = dbusSend("setVolume", player["dbus_address"], player["min_volume"]).on('done', function(){
