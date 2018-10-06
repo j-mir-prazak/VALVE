@@ -129,7 +129,10 @@ function volumeFixer(player, value) {
 					console.log(getVolume.dbus_output+":next round")
 					volumeFixer(player, "higher")
 					}
-				else player["setup_done"] = true
+				else {
+					console.log("fixing resolved")
+					player["setup_done"] = true
+					}
 				})
 			}
 			else if ( value == "lower") {
@@ -140,7 +143,10 @@ function volumeFixer(player, value) {
 						console.log(getVolume.dbus_output+":next round")
 						volumeFixer(player, "lower")
 						}
-					else player["setup_done"] = true
+					else {
+						console.log("fixing resolved")
+						player["setup_done"] = true
+						}
 					})
 			}
 }
