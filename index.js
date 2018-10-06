@@ -142,6 +142,7 @@ function volumeAdjust(player, value) {
 				console.log(player["number"] + " volume set to 20");
 			})
 		}
+		
 		else player["player"].volUp()
 	}
 
