@@ -49,7 +49,7 @@ function setupPlayer(encoderNum){
 		"encoderBig":new Array(),
 		"number":number,
 		"dbus_address":"",
-		"max_volume":false,
+		"max_volume":1,
 		"min_volume":false
 		}
 
@@ -59,13 +59,15 @@ function setupPlayer(encoderNum){
 				 cleanPID(player["player"]["pid"])
 				 console.log(player["number"] + " ended playback")
 			 })
+
 			player["player"].on("playback", function() {
 
 				 console.log(player["number"] + " playing playback")
+
 			 })
+
 			 setTimeout(function() {
 				 if(player["player"]["open"]) {
-
 			 		// player["player"].on("playing", function(){
 			 			//add logic for dbus_address search
 			 			//add dbus_message for lowest volume number search (averages?)
@@ -92,7 +94,7 @@ function setupPlayer(encoderNum){
 			 									player["player"]["min_volume"] = volume.dbus_output
 												console.log(volume.dbus_output)
 			 									//sends dbus setVolume message
-			 									var setVolume = dbusSend("setVolume", destination, 0).on('done', function(){
+			 									var setVolume = dbusSend("setVolume", destination, 1).on('done', function(){
 			 										console.log("player" + number + " volume set to 20")
 			 									})
 			 								})
