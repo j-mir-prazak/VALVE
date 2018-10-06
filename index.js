@@ -94,9 +94,9 @@ function setupPlayer(encoderNum){
 			 									player["player"]["min_volume"] = volume.dbus_output
 												console.log(volume.dbus_output)
 			 									//sends dbus setVolume message
-			 									var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
-			 										console.log("player" + number + " volume set to 20")
-			 									})
+			 									// var setVolume = dbusSend("setVolume", destination, "1").on('done', function(){
+			 									// 	console.log("player" + number + " volume set to 20")
+			 									// })
 			 								})
 			 							}
 			 						//binds destination value for dbusSend("pid"...)
