@@ -148,6 +148,7 @@ function volumeAdjust(player, value) {
 
 	if ( value == "+" && player["volume"] < 20) {
 		player["volume"]++;
+		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp();
 
 		if ( player["volume"] == 20 ) {
@@ -164,6 +165,7 @@ function volumeAdjust(player, value) {
 
 	else if ( value == "-" && player["volume"] > 0) {
 		player["volume"]--;
+		console.log(player["number"]+":volume down:"+player["volume"]);
 		player["player"].volDown();
 
 		if ( player["volume"] == 0 ) {
