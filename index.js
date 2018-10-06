@@ -117,10 +117,10 @@ function volumeFixer(player, value) {
 			var player = player || false;
 			var value = value || false;
 
-			console.log(player["number"] + " fixing volume to 20");
 			if ( ! player || ! value ) return false
 
 			if (value == "higher") {
+			console.log(player["number"] + " fixing volume to 20");
 			player["player"].volDown();
 			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
 				if ( getVolume.dbus_output > player["max_volume"] ) volumeFixer(player, "higher")
@@ -128,6 +128,7 @@ function volumeFixer(player, value) {
 				})
 			}
 			else if ( value == "lower") {
+				console.log(player["number"] + " fixing volume to 20");
 				player["player"].volUp();
 				var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
 					if ( getVolume.dbus_output < player["min"] ) volumeFixer(player, "lower")
