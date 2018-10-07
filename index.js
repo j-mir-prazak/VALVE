@@ -6,7 +6,6 @@ var fs = require('fs');
 process.on('SIGHUP',  function(){ console.log('CLOSING [SIGHUP]'); process.emit("SIGINT"); })
 process.on('SIGINT',  function(){
 	 console.log('CLOSING [SIGINT]');
-	 console.log("pids: "+pids.length)
 	 for (var i = 0; i < pids.length; i++) {
 		console.log("Killing: " + pids[i])
 		process.kill(-pids[i])
@@ -50,7 +49,7 @@ function setupPlayer(encoderNum){
 		"encoderBig":new Array(),
 		"number":number,
 		"dbus_address":"",
-		"max_volume":1,
+		"max_volume":0.707946,
 		"min_volume":0.000707946,
 		"setup_done":false
 		}
