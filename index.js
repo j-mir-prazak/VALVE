@@ -50,7 +50,7 @@ function setupPlayer(encoderNum){
 		"number":number,
 		"dbus_address":"",
 		"max_volume":1,
-		"min_volume":0.01,
+		"min_volume":0.001,
 		"setup_done":false
 		}
 
