@@ -50,7 +50,7 @@ function setupPlayer(encoderNum){
 		"number":number,
 		"dbus_address":"",
 		"max_volume":1,
-		"min_volume":0.001,
+		"min_volume":0.000707,
 		"setup_done":false
 		}
 
@@ -130,13 +130,13 @@ function volumeFixer(player, value) {
 					volumeFixer(player, "higher")
 					}
 				else {
-					console.log("fixing resolved")
+					console.log(player["number"]+" fixing resolved")
 					player["setup_done"] = true
 					}
 				})
 			}
 			else if ( value == "lower") {
-				console.log(player["number"] + " fixing volume to 20");
+				console.log(player["number"] + " fixing volume to 0");
 				player["player"].volUp();
 				var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
 					if ( getVolume.dbus_output < player["min_volume"] ) {
@@ -144,7 +144,7 @@ function volumeFixer(player, value) {
 						volumeFixer(player, "lower")
 						}
 					else {
-						console.log("fixing resolved")
+						console.log(player["number"]+" fixing resolved")
 						player["setup_done"] = true
 						}
 					})
