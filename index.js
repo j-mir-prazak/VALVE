@@ -9,7 +9,7 @@ process.on('SIGINT',  function(){
 	 console.log("pids:"+pids.length)
 	 for (var i = 0; i < pids.length; i++) {
 		console.log("Killing: " + pids[i])
-		// process.kill(-pids[i])
+		process.kill(-pids[i])
  	}
 	 process.exit(0);
  })
