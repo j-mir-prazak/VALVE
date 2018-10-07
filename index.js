@@ -6,7 +6,7 @@ var fs = require('fs');
 process.on('SIGHUP',  function(){ console.log('CLOSING [SIGHUP]'); process.emit("SIGINT"); })
 process.on('SIGINT',  function(){
 	 console.log('CLOSING [SIGINT]');
-	 console.log("pids:"+pids.length)
+	 console.log("pids: "+pids.length)
 	 for (var i = 0; i < pids.length; i++) {
 		console.log("Killing: " + pids[i])
 		process.kill(-pids[i])
