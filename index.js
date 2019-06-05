@@ -78,9 +78,11 @@ function setupPlayer(encoderNum){
 							console.log("player started playing")
 						}
 					}
-				}.bind(null, player)).
+				}.bind(null, player)
+				)
 
-		 }.bind(null, player)
+			}.bind(null, player)
+
 	 ).bind(null, player)
 
 
