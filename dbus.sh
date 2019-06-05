@@ -26,6 +26,15 @@ variable=`dbus-send --print-reply --session --dest=org.freedesktop.DBus --reply-
 
 ;;
 
+length)
+variable=`dbus-send --print-reply=literal --session --reply-timeout=500 --dest=$2 /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:"org.mpris.MediaPlayer2.Player" string:"Metadata" | grep mpris:length`
+
+;;
+
+position)
+variable=`dbus-send --print-reply=literal --session --reply-timeout=500 --dest=$2 /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:"org.mpris.MediaPlayer2.Player" string:"Position"`
+
+;;
 
 *)
 	variable=`dbus-send --print-reply --session --dest=org.freedesktop.DBus --reply-timeout=500 /org/freedesktop/DBus org.freedesktop.DBus.ListNames`
