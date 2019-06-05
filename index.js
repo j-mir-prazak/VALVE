@@ -82,8 +82,7 @@ function setupPlayer(encoderNum){
 				)
 
 			}.bind(null, player)
-
-	 ).bind(null, player)
+		)
 
 
 		return player
