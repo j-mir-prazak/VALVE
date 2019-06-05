@@ -62,24 +62,26 @@ function setupPlayer(encoderNum){
 
 			 console.log(player["number"] + " playing playback")
 
+
+			 player["player"].stdout.on('data', function(){
+					var decoder = new StringDecoder('utf-8')
+					var string = decoder.write(data)
+					string=string.split(/\r?\n/)
+					for( var i = 0; i < string.length; i++) {
+						if (string[i].length > 0 && string[i].match(/Current Volume/) ) {
+							var vol = string[i].replace(/Current Volume: (.*)dB/i,"$1")
+							vol = parseFloat(vol) * 100
+							console.log("Current volume: " + vol)
+
+						}
+						else if (string[i].length > 0 && string[i].match(/Audio co/) ) {
+							console.log("player started playing")
+						}
+					}
+				}.bind(null, player)).bind(null,player)
+
 		 })
 
-		player["player"].stdout.on('data', function(){
-			 var decoder = new StringDecoder('utf-8')
-			 var string = decoder.write(data)
-			 string=string.split(/\r?\n/)
-			 for( var i = 0; i < string.length; i++) {
-				 if (string[i].length > 0 && string[i].match(/Current Volume/) ) {
-					 var vol = string[i].replace(/Current Volume: (.*)dB/i,"$1")
-					 vol = parseFloat(vol) * 100
-					 console.log("Current volume: " + vol)
-
-				 }
-				 else if (string[i].length > 0 && string[i].match(/Audio co/) ) {
-					 console.log("player started playing")
-				 }
-			 }
-		 }.bind(null, player)).bind(null,player)
 
 		return player
 	}
