@@ -44,68 +44,42 @@ function setupPlayer(encoderNum){
 		console.log(asset + " exists")
 		var player = {
 		"player": omxplayer("./assets/"+number+".mp3", "local", true, -300),
-		"volume": 20,
+		"volume": -300,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number,
-		"dbus_address":"",
-		"max_volume":0.707946,
-		"min_volume":0.000707946,
 		"setup_done":false
 		}
 
-			console.log("player pid: " + player["player"]["pid"])
-			pids.push(player["player"]["pid"])
-			player["player"].on("close", function() {
-				 cleanPID(player["player"]["pid"])
-				 console.log(player["number"] + " ended playback")
-			 })
+		console.log("player pid: " + player["player"]["pid"])
+		pids.push(player["player"]["pid"])
+		player["player"].on("close", function() {
+			 cleanPID(player["player"]["pid"])
+			 console.log(player["number"] + " ended playback")
+		 })
 
-			player["player"].on("playback", function() {
+		player["player"].on("playback", function() {
 
-				 console.log(player["number"] + " playing playback")
+			 console.log(player["number"] + " playing playback")
 
-			 })
+		 })
 
-			 setTimeout(function() {
-				 if( player["player"]["open"] ) {
-			 		// player["player"].on("playing", function(){
-			 			//add logic for dbus_address search
-			 			//add dbus_message for lowest volume number search (averages?)
-			 			//add dbus_message for setting the volume for the highest
+		 player["player"].stdout.on('date', function(){
+			 var decoder = new StringDecoder('utf-8')
+			 var string = decoder.write(data)
+			 string=string.split(/\r?\n/)
+			 for( var i = 0; i < string.length; i++) {
+				 if (string[i].length > 0 && string[i].match(/Current Volume/) ) {
+					 var vol = string[i].replace(/Current Volume: (.*)dB/i,"$1")
+					 vol = parseFloat(vol) * 100
+					 console.log("Current volume: " + vol)
 
-			 			// ---- dbus code ----- //
-
-
-			 			//gets all dbus destinations
-			 			var dbus_destinations = dbusSend();
-			 			dbus_destinations.on('done', function() {
-			 				var destinations = dbus_destinations.dbus_output
-			 				if ( typeof destinations == 'object' && destinations.length > 0) {
-			 					//val == dbus destination
-			 					destinations.forEach(function(val, index) {
-			 						//check pids for destination
-			 						var pid = dbusSend("pid", val).on('done', function (destination) {
-			 							var destination = destination
-			 							if ( player["player"]["pid"] == pid.dbus_output ) {
-			 								player["dbus_address"] = destination
-			 								console.log("player" + number + " dbus address: " + destination)
-											player["setup_done"] = true;
-			 							}
-			 						//binds destination value for dbusSend("pid"...)
-			 						}.bind(this, val))
-			 					})
-			 				}
-			 			})
-					}
-				}.bind(this), 1500)
-
-
-			 			// ---- dbus setup done ----- //
-
-
-
-		 // })
+				 }
+				 else if (string[i].length > 0 && string[i].match(/Audio co/) ) {
+					 console.log("player started playing")
+				 }
+			 }
+		 }.bind(null, player)).bind(null,player)
 
 		return player
 	}
@@ -160,45 +134,21 @@ function volumeAdjust(player, value) {
 	if ( ! player["setup_done"] ) return false
 	if ( ! player["player"]["open"] ) return false
 
-	if ( value == "+" && player["volume"] < 20) {
+	if ( value == "+" && player["volume"] < -300) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp();
 
-		if ( player["volume"] == 20 ) {
-			player["setup_done"] = false;
-			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
-
-				if ( getVolume.dbus_output > player["max_volume"] ) {
-					console.log(player["number"] + " volume fixing");
-					volumeFixer(player, "higher");
-					}
-				else player["setup_done"] = true;
-
-				})
-			}
 		}
 
-
-	else if ( value == "-" && player["volume"] > 0) {
+	else if ( value == "-" && player["volume"] > -6000) {
 		player["volume"]--;
 		console.log(player["number"]+":volume down:"+player["volume"]);
 		player["player"].volDown();
 
-		if ( player["volume"] == 0 ) {
-			player["setup_done"] = false;
-			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
-
-				if ( getVolume.dbus_output < player["min_volume"] ) {
-					console.log(player["number"] + " volume fixing");
-					volumeFixer(player, "lower")
-					}
-				else player["setup_done"] = true;
-
-				})
-			}
-
 		}
+
+		player["setup_done"] = false;
 
 }
 
