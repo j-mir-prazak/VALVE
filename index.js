@@ -64,7 +64,7 @@ function setupPlayer(encoderNum){
 
 		 })
 
-		 player["player"].stdout.on('date', function(){
+		player["player"].process.stdout.on('date', function(){
 			 var decoder = new StringDecoder('utf-8')
 			 var string = decoder.write(data)
 			 string=string.split(/\r?\n/)
