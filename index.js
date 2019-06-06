@@ -181,9 +181,15 @@ function volumeAdjust(player, value) {
 function parseEverySecondOne(encoderArray){
 	var encoder = encoderArray || false;
  	//changed from 3 to 4; arrays indexies too
-	if (encoder.length == 4 ) {
-		if(encoder[0] == encoder[3]) {
-			encoder.splice(1,2)
+	// if (encoder.length == 4 ) {
+	// 	if(encoder[0] == encoder[3]) {
+	// 		encoder.splice(1,2)
+	// 	}
+	// 	else encoder.shift()
+	// }
+	if (encoder.length == 3 ) {
+		if(encoder[0] == encoder[2]) {
+			encoder.splice(1)
 		}
 		else encoder.shift()
 	}
@@ -288,9 +294,8 @@ function cat(tty) {
 				}
 				players[encoderNum]["encoder"].push(encoderValue)
 
-				// var value = parseEverySecondOne(players[encoderNum]["encoder"])
-				//trying quicker response
-				var value = players[encoderNum]["encoder"]
+				var value = parseEverySecondOne(players[encoderNum]["encoder"])
+
 				if (value != false) {
 					players[encoderNum]["encoderBig"].push(value)
 					volumeAdjust(encoderNum, value)
