@@ -43,7 +43,7 @@ function setupPlayer(encoderNum){
 	else {
 		console.log(asset + " exists")
 		var player = {
-		"player": omxplayer("./assets/"+number+".mp3",10, "local", true, -300),
+		"player": omxplayer("./assets/"+number+".mp3","local", true, -300),
 		"volume": 10,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
