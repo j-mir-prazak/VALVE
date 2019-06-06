@@ -48,7 +48,7 @@ function setupPlayer(encoderNum){
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number,
-		"setup_done":0
+		"setup_done":false
 		}
 
 		console.log("player pid: " + player["player"]["pid"])
@@ -66,7 +66,7 @@ function setupPlayer(encoderNum){
 
 			 console.log(player["number"] + " playing playback")
 
-			 player["setup_done"] = 0
+			 player["setup_done"] = true
 
 			 player["player"]["process"].stdout.on('data', (data) => {
 					var decoder = new StringDecoder('utf-8')
@@ -92,7 +92,7 @@ function setupPlayer(encoderNum){
 							console.log("Volume: "+ vol)
 							player["volume"] = vol
 							// eoutput = parseFloat(eoutput) * 100
-							player["setup_done"]--
+							player["setup_done"] = true
 
 						}
 						else if (string[i].length > 0 && string[i].match(/Audio co/) ) {
@@ -155,15 +155,14 @@ function volumeAdjust(player, value) {
 	var player = players[player] || false
 	var value = value || false
 
-	if (  player["setup_done"] > 0 ) return false
+	if ( ! player["setup_done"] ) return false
 	if ( ! player["player"]["open"] ) return false
 
 	if ( value == "+" && player["volume"] < -300) {
 
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp();
-		player["player"].volUp();
-		player["setup_done"] = 2;
+		player["setup_done"] = false;
 
 		}
 
@@ -171,8 +170,7 @@ function volumeAdjust(player, value) {
 
 		console.log(player["number"]+":volume down:"+player["volume"]);
 		player["player"].volDown();
-		player["player"].volDown();
-		player["setup_done"] = 2;
+		player["setup_done"] = false;
 
 		}
 
