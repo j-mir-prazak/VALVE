@@ -83,13 +83,14 @@ function setupPlayer(encoderNum){
 
 							console.log(string[i])
 							var vol = string[i].replace(/Current Volume.*? (.*)dB.*/,"$1")
-
+							var vol = vol * 100
 							// mplayer string parsing
 							// var eoutput = escape(string[i]).replace(/.*%1B%5BK/,"")
 							// console.log("--------")
 							// console.log("new output: " + unescape(eoutput))
 
 							console.log("Volume: "+ vol)
+							player["volume"] = vol
 							// eoutput = parseFloat(eoutput) * 100
 							player["setup_done"] = true
 
