@@ -43,8 +43,8 @@ function setupPlayer(encoderNum){
 	else {
 		console.log(asset + " exists")
 		var player = {
-		"player": omxplayer("./assets/"+number+".mp3", "local", true, -300),
-		"volume": -300,
+		"player": omxplayer("./assets/"+number+".mp3",10, "local", true, -300),
+		"volume": 10,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number,
@@ -52,34 +52,52 @@ function setupPlayer(encoderNum){
 		}
 
 		console.log("player pid: " + player["player"]["pid"])
+
 		pids.push(player["player"]["pid"])
+
 		player["player"].on("close", function() {
+
 			 cleanPID(player["player"]["pid"])
 			 console.log(player["number"] + " ended playback")
+
 		 })
 
 		player["player"].on("playback", function() {
 
 			 console.log(player["number"] + " playing playback")
 
+			 player["setup_done"] = true
 
-			 player["player"].stdout.on('data', function(){
+			 player["player"]["process"].stdout.on('data', (data) => {
 					var decoder = new StringDecoder('utf-8')
 					var string = decoder.write(data)
 					string=string.split(/\r?\n/)
 					for( var i = 0; i < string.length; i++) {
-						if (string[i].length > 0 && string[i].match(/Current Volume/) ) {
-							var vol = string[i].replace(/Current Volume: (.*)dB/i,"$1")
-							vol = parseFloat(vol) * 100
-							console.log("Current volume: " + vol)
+						if (string[i].length > 0 ) {
+							// console.log(string[i])
+						}
+
+						if (string[i].length > 0 && string[i].match(/volume/i) ) {
+							// console.log(string[i])
+							// console.log("----------")
+
+							console.log(escape(string[i]))
+
+							// mplayer string parsing
+							// var eoutput = escape(string[i]).replace(/.*%1B%5BK/,"")
+							// console.log("--------")
+							// console.log("new output: " + unescape(eoutput))
+
+							console.log("Volume: ")
+							eoutput = parseFloat(eoutput) * 100
+							player["setup_done"] = true
 
 						}
 						else if (string[i].length > 0 && string[i].match(/Audio co/) ) {
 							console.log("player started playing")
 						}
 					}
-				}.bind(null, player)
-				)
+				})
 
 			}.bind(null, player)
 		)
@@ -91,43 +109,43 @@ function setupPlayer(encoderNum){
 	return false
 }
 
-function volumeFixer(player, value) {
-
-			var player = player || false;
-			var value = value || false;
-
-			if ( ! player ) return false
-			if ( ! value ) return false
-
-			if (value == "higher") {
-			console.log(player["number"] + " fixing volume to 20");
-			player["player"].volDown();
-			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
-				if ( getVolume.dbus_output > player["max_volume"] ) {
-					console.log(getVolume.dbus_output+":next round")
-					volumeFixer(player, "higher")
-					}
-				else {
-					console.log(player["number"]+" fixing resolved")
-					player["setup_done"] = true
-					}
-				})
-			}
-			else if ( value == "lower") {
-				console.log(player["number"] + " fixing volume to 0");
-				player["player"].volUp();
-				var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
-					if ( getVolume.dbus_output < player["min_volume"] ) {
-						console.log(getVolume.dbus_output+":next round")
-						volumeFixer(player, "lower")
-						}
-					else {
-						console.log(player["number"]+" fixing resolved")
-						player["setup_done"] = true
-						}
-					})
-			}
-}
+// function volumeFixer(player, value) {
+//
+// 			var player = player || false;
+// 			var value = value || false;
+//
+// 			if ( ! player ) return false
+// 			if ( ! value ) return false
+//
+// 			if (value == "higher") {
+// 			console.log(player["number"] + " fixing volume to 20");
+// 			player["player"].volDown();
+// 			var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
+// 				if ( getVolume.dbus_output > player["max_volume"] ) {
+// 					console.log(getVolume.dbus_output+":next round")
+// 					volumeFixer(player, "higher")
+// 					}
+// 				else {
+// 					console.log(player["number"]+" fixing resolved")
+// 					player["setup_done"] = true
+// 					}
+// 				})
+// 			}
+// 			else if ( value == "lower") {
+// 				console.log(player["number"] + " fixing volume to 0");
+// 				player["player"].volUp();
+// 				var getVolume = dbusSend("volume", player["dbus_address"]).on('done', function(){
+// 					if ( getVolume.dbus_output < player["min_volume"] ) {
+// 						console.log(getVolume.dbus_output+":next round")
+// 						volumeFixer(player, "lower")
+// 						}
+// 					else {
+// 						console.log(player["number"]+" fixing resolved")
+// 						player["setup_done"] = true
+// 						}
+// 					})
+// 			}
+// }
 
 
 function volumeAdjust(player, value) {
@@ -138,14 +156,14 @@ function volumeAdjust(player, value) {
 	if ( ! player["setup_done"] ) return false
 	if ( ! player["player"]["open"] ) return false
 
-	if ( value == "+" && player["volume"] < -300) {
+	if ( value == "+" && player["volume"] < 100) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp();
 
 		}
 
-	else if ( value == "-" && player["volume"] > -6000) {
+	else if ( value == "-" && player["volume"] > 0) {
 		player["volume"]--;
 		console.log(player["number"]+":volume down:"+player["volume"]);
 		player["player"].volDown();
