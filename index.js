@@ -44,7 +44,7 @@ function setupPlayer(encoderNum){
 		console.log(asset + " exists")
 		var player = {
 		"player": omxplayer("./assets/"+number+".mp3","local", true, -300),
-		"volume": 10,
+		"volume": -300,
 		"encoder":new Array(),
 		"encoderBig":new Array(),
 		"number":number,
@@ -82,13 +82,14 @@ function setupPlayer(encoderNum){
 							// console.log("----------")
 
 							console.log(string[i])
+							var vol = string[i].replace(/Current Volume.*? (.*)dB.*/,"$1")
 
 							// mplayer string parsing
 							// var eoutput = escape(string[i]).replace(/.*%1B%5BK/,"")
 							// console.log("--------")
 							// console.log("new output: " + unescape(eoutput))
 
-							console.log("Volume: ")
+							console.log("Volume: "+vol)
 							// eoutput = parseFloat(eoutput) * 100
 							player["setup_done"] = true
 
@@ -156,14 +157,14 @@ function volumeAdjust(player, value) {
 	if ( ! player["setup_done"] ) return false
 	if ( ! player["player"]["open"] ) return false
 
-	if ( value == "+" && player["volume"] < 100) {
+	if ( value == "+" && player["volume"] < -300) {
 		player["volume"]++;
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp();
 
 		}
 
-	else if ( value == "-" && player["volume"] > 0) {
+	else if ( value == "-" && player["volume"] > -6000) {
 		player["volume"]--;
 		console.log(player["number"]+":volume down:"+player["volume"]);
 		player["player"].volDown();
