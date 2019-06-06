@@ -89,7 +89,7 @@ function setupPlayer(encoderNum){
 							// console.log("new output: " + unescape(eoutput))
 
 							console.log("Volume: ")
-							eoutput = parseFloat(eoutput) * 100
+							// eoutput = parseFloat(eoutput) * 100
 							player["setup_done"] = true
 
 						}
