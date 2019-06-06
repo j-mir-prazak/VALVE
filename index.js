@@ -162,6 +162,7 @@ function volumeAdjust(player, value) {
 
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp();
+		player["setup_done"] = false;
 
 		}
 
@@ -169,10 +170,10 @@ function volumeAdjust(player, value) {
 
 		console.log(player["number"]+":volume down:"+player["volume"]);
 		player["player"].volDown();
+		player["setup_done"] = false;
 
 		}
 
-		player["setup_done"] = false;
 
 }
 
