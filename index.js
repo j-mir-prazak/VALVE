@@ -81,7 +81,7 @@ function setupPlayer(encoderNum){
 							// console.log(string[i])
 							// console.log("----------")
 
-							console.log(escape(string[i]))
+							console.log(string[i])
 
 							// mplayer string parsing
 							// var eoutput = escape(string[i]).replace(/.*%1B%5BK/,"")
