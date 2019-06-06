@@ -159,14 +159,14 @@ function volumeAdjust(player, value) {
 	if ( ! player["player"]["open"] ) return false
 
 	if ( value == "+" && player["volume"] < -300) {
-		player["volume"]++;
+
 		console.log(player["number"]+":volume up:"+player["volume"]);
 		player["player"].volUp();
 
 		}
 
 	else if ( value == "-" && player["volume"] > -6000) {
-		player["volume"]--;
+
 		console.log(player["number"]+":volume down:"+player["volume"]);
 		player["player"].volDown();
 
